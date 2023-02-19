@@ -2,6 +2,7 @@ import React from 'react';
 import Head from 'next/head'
 import {GetStaticPaths, GetStaticProps} from "next";
 import {fetch} from "next/dist/compiled/@edge-runtime/primitives/fetch";
+import ReactMarkdown from "react-markdown";
 import {IPost} from "@/model";
 import styles from "@/styles/Post.module.scss"
 import Image from "next/image";
@@ -53,9 +54,9 @@ const Post = ({post}:{post:IPost}) => {
                     {post.title}
                 </h1>
                 <div className={styles.info}>
-                    <article>
-                        {post.text}
-                    </article>
+                   <article className={styles.text}>
+                       <ReactMarkdown children={post.text}/>
+                   </article>
                     <div className={styles.tags_card}>
                         {post.tags.map((tag:string,index:number)=><span key={index}>#{tag}</span>)}
                     </div>

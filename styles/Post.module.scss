@@ -25,6 +25,18 @@
   flex-direction: column;
   gap: 10px;
 }
+.text{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap:10px;
+  p{
+    margin: 0 auto;
+  }
+  img{
+    max-width: 100%;
+  }
+}
 .tags_card{
   display: flex;
   gap: 10px;
