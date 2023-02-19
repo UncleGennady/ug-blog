@@ -1,0 +1,21 @@
+.container{
+  min-width: 1200px;
+  padding:0 35px;
+}
+
+@media(max-width: 1200px){
+  .container{
+    min-width: 600px;
+    padding:0 20px;
+  }
+}
+
+@media(max-width: 600px){
+  .container{
+    min-width: 100%;
+    padding:0 15px;
+  }
+}
+.footer{
+  padding: 30px;
+}
