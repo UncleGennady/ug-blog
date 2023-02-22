@@ -1,4 +1,6 @@
-const getDateClosing = () => {
+import {toogleForPostList} from "@/model";
+
+export const getDateClosing = () => {
     const month = [
         'January',
         'February',
@@ -37,3 +39,8 @@ const getDateClosing = () => {
     }
 }
 export const getDate = getDateClosing()
+
+export const toggleForPostList:toogleForPostList= {
+    new:"new",
+    popular: "popular",
+}

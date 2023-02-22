@@ -1,9 +1,7 @@
 import React from 'react';
 import styles from "@/styles/Aside.module.scss"
-type Props = {
-    children: JSX.Element[]
-}
-const Aside = ({children}: Props) => {
+import {JSXElement} from "@/model";
+const Aside = ({children}:{children:JSXElement | JSXElement[]}) => {
     return (
         <aside className={`${styles.aside}`}>
             {children}

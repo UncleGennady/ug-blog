@@ -4,6 +4,17 @@
   flex-wrap: wrap;
   gap:30px
 }
+.toggle{
+  display: flex;
+  gap: 10px;
+  div {
+    cursor: pointer;
+    padding: 20px;
+  }
+  &_active{
+    border-bottom: 2px solid #263159 ;
+  }
+}
 .wrapper_cards{
   width: 70%;
 

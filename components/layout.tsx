@@ -2,11 +2,8 @@ import React from 'react';
 import Header from "@/components/header";
 import styles from "@/styles/Layout.module.scss"
 import {raleway} from "@/pages/_app";
-
-type Props = {
-    children: JSX.Element
-}
-const Layout = ({children}: Props) => {
+import {JSXElement} from "@/model";
+const Layout = ({children}:{children:JSXElement | JSXElement[]}) => {
     return (
         <>
             <Header />
