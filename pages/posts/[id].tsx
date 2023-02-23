@@ -30,7 +30,7 @@ export const getStaticProps : GetStaticProps = async (context) => {
     const {doc} = await res.json()
 
     const resComments = await  fetch(`https://ug-mern-blog.onrender.com/comments/${id}`)
-    const {comments} = await resComments.json()
+    const comments:{success:boolean, comments:IComment[]} | {message:string} = await resComments.json()
 
     return {
         props: {post:doc, comments},
@@ -38,7 +38,27 @@ export const getStaticProps : GetStaticProps = async (context) => {
     }
 }
 
-const Post = ({post, comments}:{post:IPost, comments:IComment[]}) => {
+type TComments = {success: boolean, comments:IComment[]} | {message:string};
+
+const Post = ({post, comments}:{post:IPost, comments: TComments}) => {
+
+    const renderImage = (image:any): any =>{
+        if(!image) return null
+        return (
+            <div className={styles.wrapper_image}>
+                <Image
+                    loader={() => `https://ug-mern-blog.onrender.com${post.imageUrl}` }
+                    src={`https://ug-mern-blog.onrender.com${post.imageUrl}`}
+                    alt={"#"}
+                    unoptimized={true}
+                    fill
+                />
+            </div>
+        )
+    }
+
+    // @ts-ignore
+    // @ts-ignore
     return (
         <>
             <Head>
@@ -47,15 +67,7 @@ const Post = ({post, comments}:{post:IPost, comments:IComment[]}) => {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
             <Card>
-                <div className={styles.wrapper_image}>
-                    <Image
-                        loader={() => `https://ug-mern-blog.onrender.com${post.imageUrl}` }
-                        src={`https://ug-mern-blog.onrender.com${post.imageUrl}`}
-                        alt={"#"}
-                        unoptimized={true}
-                        fill
-                    />
-                </div>
+                {renderImage(post.imageUrl)}
                 <h1 className={styles.title}>
                     {post.title}
                 </h1>
@@ -63,9 +75,9 @@ const Post = ({post, comments}:{post:IPost, comments:IComment[]}) => {
                     <article className={styles.text}>
                         <ReactMarkdown children={post.text}/>
                     </article>
-                    <div className={styles.tags_card}>
+                    {!!post.tags[0] && <div className={styles.tags_card}>
                         {post.tags.map((tag:string,index:number)=><span key={index}>#{tag}</span>)}
-                    </div>
+                    </div>}
                     <div className={styles.statistics}>
                         <div className={styles.views}>
                             <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv" focusable="false"
@@ -89,7 +101,7 @@ const Post = ({post, comments}:{post:IPost, comments:IComment[]}) => {
                     </div>
                 </div>
             </Card>
-            <Comments comments={comments} />
+            <Comments comments={comments.comments} />
         </>
     );
 };

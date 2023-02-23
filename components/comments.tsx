@@ -9,7 +9,7 @@ const Comments = ({comments}:{comments:IComment[]}) => {
     return (
        <Card>
            <div>
-               <ul className={styles.comments}>
+               {!!comments ? <ul className={styles.comments}>
                    {comments.map((comment)=>(
                        <li className={styles.comment}>
                            <div className={styles.comment_info}>
@@ -30,7 +30,7 @@ const Comments = ({comments}:{comments:IComment[]}) => {
                            </div>
                        </li>
                    ))}
-               </ul>
+               </ul> : <div className={styles.no_comments}>So far no comments</div>}
                <form className={styles.comments_form}>
                    <textarea placeholder='comments'/>
                    <button type={"submit"}>

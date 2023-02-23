@@ -2,17 +2,38 @@
   padding-top: 40px;
   display: flex;
   flex-wrap: wrap;
-  gap:30px
+  justify-content: space-between;
 }
-.toggle{
+
+.filters{
   display: flex;
   gap: 10px;
+  line-height: 25px;
+  font-size: 20px;
   div {
     cursor: pointer;
     padding: 20px;
   }
-  &_active{
-    border-bottom: 2px solid #263159 ;
+}
+.toggle_active{
+  border-bottom: 2px solid #263159 ;
+}
+.tag{
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
+    gap: 10px;
+  button{
+    background: initial;
+    width: 25px;
+    height: 25px;
+    border: 0;
+    border-radius: 50%;
+    transition: .5s;
+    &:hover{
+      transform: rotate(180deg) scale(1.2);
+      background: #ff6a6a;
+    }
   }
 }
 .wrapper_cards{
@@ -25,12 +46,12 @@
 }
 .card{
   width: 100%;
+  height: max-content;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: self-start;
-  gap: 20px;
-  border-radius: 10px;
+    border-radius: 10px;
   color: #263159;
   background: #FFFBEB;
   box-shadow: 0 0 15px 0 #495579;
@@ -50,7 +71,7 @@
   }
 }
 .info{
-  padding: 0 20px 20px;
+  padding: 20px 20px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -84,4 +105,5 @@
   display: flex;
   flex-direction: column;
   gap: 40px;
+  width: 25%;
 }
