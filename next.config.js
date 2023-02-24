@@ -11,6 +11,9 @@ const nextConfig = {
       },
     ],
   },
+  env:{
+    API_URL: 'https://ug-mern-blog.onrender.com'
+  },
 }
 
 module.exports = nextConfig

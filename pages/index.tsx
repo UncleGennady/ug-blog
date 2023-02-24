@@ -13,11 +13,11 @@ import TagsList from "@/components/tags-list";
 import CommemtsList from "@/components/commemts-list";
 
 export const getStaticProps : GetStaticProps = async () => {
-    const res = await  fetch('https://ug-mern-blog.onrender.com/posts')
+    const res = await  fetch(`${process.env.API_URL}/posts`)
     const {posts}:{posts:IPost[]} = await res.json()
     const postsReverse:IPost[] = posts.reverse()
 
-    const resLastComments = await  fetch(`https://ug-mern-blog.onrender.com/comments`)
+    const resLastComments = await  fetch(`${process.env.API_URL}/comments`)
 
     const {comments}:{comments:IComment[]} = await resLastComments.json()
     // const comments:{success:boolean, comments:IComment[]} | {message:string} = await resLastComments.json()
@@ -58,8 +58,8 @@ export default function Home({posts, lastComments}:{posts:IPost[], lastComments:
             >
                 {!!post.imageUrl && <div className={styles.wrapper_image}>
                     <Image
-                    loader={() => `https://ug-mern-blog.onrender.com${post.imageUrl}` }
-                    src={`https://ug-mern-blog.onrender.com${post.imageUrl}`}
+                    loader={() => `${process.env.API_URL}${post.imageUrl}` }
+                    src={`${process.env.API_URL}${post.imageUrl}`}
                     alt={"#"}
                     unoptimized={true}
                     fill
@@ -67,7 +67,7 @@ export default function Home({posts, lastComments}:{posts:IPost[], lastComments:
                     </div>}
                 <div className={styles.info}>
                     <div className={styles.privat_info}>
-                        <Avatar src={`https://ug-mern-blog.onrender.com${post.author.avatarUrl}`}/>
+                        <Avatar src={`${process.env.API_URL}${post.author.avatarUrl}`}/>
                         <div>
                             <p>
                                 {post.author.fullName}

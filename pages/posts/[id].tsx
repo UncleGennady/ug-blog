@@ -12,7 +12,7 @@ import Card from "@/components/card";
 import Avatar from "@/components/avatar";
 
 export const getStaticPaths : GetStaticPaths = async () => {
-    const res = await fetch(`https://ug-mern-blog.onrender.com/posts`)
+    const res = await fetch(`${process.env.API_URL}/posts`)
     const {posts} = await res.json()
 
     const paths = posts.map((post: IPost) => ({
@@ -26,10 +26,10 @@ export const getStaticPaths : GetStaticPaths = async () => {
 }
 export const getStaticProps : GetStaticProps = async (context) => {
     const {id}:any = context.params
-    const res = await  fetch(`https://ug-mern-blog.onrender.com/posts/${id}`)
+    const res = await  fetch(`${process.env.API_URL}/posts/${id}`)
     const {doc} = await res.json()
 
-    const resComments = await  fetch(`https://ug-mern-blog.onrender.com/comments/${id}`)
+    const resComments = await  fetch(`${process.env.API_URL}/comments/${id}`)
     const comments:{success:boolean, comments:IComment[]} | {message:string} = await resComments.json()
 
     return {
@@ -47,8 +47,8 @@ const Post = ({post, comments}:{post:IPost, comments: TComments}) => {
         return (
             <div className={styles.wrapper_image}>
                 <Image
-                    loader={() => `https://ug-mern-blog.onrender.com${post.imageUrl}` }
-                    src={`https://ug-mern-blog.onrender.com${post.imageUrl}`}
+                    loader={() => `${process.env.API_URL}${post.imageUrl}` }
+                    src={`${process.env.API_URL}${post.imageUrl}`}
                     alt={"#"}
                     unoptimized={true}
                     fill
@@ -57,8 +57,7 @@ const Post = ({post, comments}:{post:IPost, comments: TComments}) => {
         )
     }
 
-    // @ts-ignore
-    // @ts-ignore
+
     return (
         <>
             <Head>
@@ -79,7 +78,7 @@ const Post = ({post, comments}:{post:IPost, comments: TComments}) => {
                         {post.tags.map((tag:string,index:number)=><span key={index}>#{tag}</span>)}
                     </div>}
                     <div className={styles.statistics}>
-                        <div className={styles.views}>
+                        <div className={styles.statistics_item}>
                             <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv" focusable="false"
                                  aria-hidden="true" viewBox="0 0 24 24" data-testid="RemoveRedEyeOutlinedIcon" width={18} height={18}>
                                 <path
@@ -89,11 +88,21 @@ const Post = ({post, comments}:{post:IPost, comments: TComments}) => {
                                     {post.viewsCount}
                                 </span>
                         </div>
+                        {!!comments.comments && <div className={styles.statistics_item}>
+                            <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv" focusable="false"
+                                 aria-hidden="true" viewBox="0 0 24 24" data-testid="ChatBubbleOutlineOutlinedIcon" width={18} height={18}>
+                                <path
+                                    d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"></path>
+                            </svg>
+                            <span>
+                                {comments.comments.length}
+                            </span>
+                        </div>}
                     </div>
                     <div className={styles.privat_info}>
                         <div className={styles.author}>
                             <h4>{post.author.fullName}</h4>
-                            <Avatar src={`https://ug-mern-blog.onrender.com${post.author.avatarUrl}`} />
+                            <Avatar src={`${process.env.API_URL}${post.author.avatarUrl}`} />
                         </div>
                         <p>
                             {getDate(post.createdAt)}

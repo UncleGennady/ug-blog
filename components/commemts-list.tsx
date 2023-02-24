@@ -11,7 +11,7 @@ const CommemtsList = ({comments}:{comments:IComment[]}) => {
             <ul className={styles.list}>
                 {comments.map((comment)=>(
                     <li className={styles.item}>
-                        <Avatar src={`https://ug-mern-blog.onrender.com${comment.author.avatarUrl}`}/>
+                        <Avatar src={`${process.env.API_URL}${comment.author.avatarUrl}`}/>
                         <div className={styles.info}>
                             <h4>{comment.author.fullName}</h4>
                             <p>{comment.text}</p>

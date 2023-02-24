@@ -42,9 +42,13 @@
   align-items: center;
   gap:10px;
 }
-
-.views{
+.statistics{
   display: flex;
-  align-items: center;
-  gap: 5px;
+  gap: 20px;
+
+  &_item{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
 }
