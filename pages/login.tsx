@@ -1,6 +1,7 @@
 import React from 'react';
 import Head from "next/head";
-import styles from "@/styles/Login.module.scss";
+import { Formik } from 'formik';
+import styles from "@/styles/LoginRegister.module.scss";
 
 const Login = () => {
     return (
@@ -11,8 +12,73 @@ const Login = () => {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
             <main className={styles.main}>
-                <div>
+                <h2>Sign in</h2>
+                <div className={styles.wrapper}>
+                    <Formik
+                        initialValues={{ email: '', password: '' }}
+                        validate={values => {
+                            const errors:any = {};
+                            if (!values.email) {
+                                errors.email = 'Required';
+                            } else if (
+                                !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+                            ) {
+                                errors.email = 'Invalid email address';
+                            }
 
+                            if(!values.password){
+                                errors.password = 'Required';
+                            }
+                            return errors;
+                        }}
+                        onSubmit={(values, { setSubmitting }) => {
+                            setTimeout(() => {
+                                alert(JSON.stringify(values, null, 2));
+                                setSubmitting(false);
+                            }, 400);
+                        }}
+                    >
+                        {({
+                              values,
+                              errors,
+                              touched,
+                              handleChange,
+                              handleBlur,
+                              handleSubmit,
+                              isSubmitting,
+                              /* and other goodies */
+                          }) => (
+                            <form className={styles.form} onSubmit={handleSubmit}>
+                                <input
+                                    type="email"
+                                    name="email"
+                                    placeholder="email"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.email}
+                                    className={styles.input}
+                                />
+                                {errors.email && touched.email && <div className={styles.input_error}>
+                                    {errors.email}
+                                </div>}
+                                <input
+                                    type="password"
+                                    name="password"
+                                    placeholder="password"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.password}
+                                    className={styles.input}
+                                />
+                                {errors.password && touched.password && <div className={styles.input_error}>
+                                    {errors.password}
+                                </div>}
+                                <button type="submit" disabled={isSubmitting}  className={styles.button}>
+                                    Submit
+                                </button>
+                            </form>
+                        )}
+                    </Formik>
                 </div>
             </main>
         </>
