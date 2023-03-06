@@ -1,45 +1,74 @@
-import React,{useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import Head from "next/head";
 import styles from "@/styles/LoginRegister.module.scss";
 import {Formik} from "formik";
 import Avatar from "@/components/avatar";
+import {
+    useDeleteAvatarMutation,
+    useFetchAvatarMutation,
+    useFetchRegisterMutation,
+    useGetAuthMeQuery
+} from "@/store/authApi";
+import {ISignUpResponse, ISignUp} from "@/model";
+import {useRouter} from "next/router";
 
 
 const Register = () => {
+    const  router = useRouter()
+    const [fetchAvatar] = useFetchAvatarMutation()
+    const [deleteAvatar] = useDeleteAvatarMutation()
+    const [fetchRegister, results] = useFetchRegisterMutation()
+    const {data} = useGetAuthMeQuery()
     const [avatar, setAvatar] = useState<string>('')
     const inputFileRef = useRef(null)
+
+    useEffect(()=>{
+        if(!!data)router.push('/')
+    },[data])
+
     const handleChangeFile = async(event:any) => {
         try {
             console.log(1)
             const formData = new FormData();
             const file = event.target.files[0];
             formData.append('image', file);
-            // const{data} = await axios.post('/avatar', formData);
-            const data ={
-                url:'asasa'
-            }
+            const {data}:any = await fetchAvatar(formData)
+
             console.log(data)
+
             setAvatar(data.url)
 
         }catch (err){
             console.warn("ошибка",err);
-            alert('Ошибка при загрузке файла!')
+            alert('Error getting file!')
         }
     };
 
     const onClickRemoveImage = async() => {
         try {
-            // const{data} = await axios.delete('/avatar', {data:{ url: avatar}});
-            const data ={
-                url:'asasa'
-            }
+            const {data}:any = await deleteAvatar({data:{ url: avatar}})
             console.log(data)
             setAvatar('')
         }catch (err){
             console.warn("ошибка",err);
-            alert('Ошибка при удалении файла!')
+            alert('Error deleting file!')
         }
     };
+
+    const submitHandle = async(values:ISignUp) => {
+        try {
+            if(!!avatar) values.avatarUrl = avatar
+            const data:ISignUpResponse | any = await fetchRegister(values);
+            console.log(results)
+            console.log(data)
+            if(!data.data){
+                throw new Error("Failed to sign up")
+            }
+            router.push('/login')
+        }catch (e){
+                return alert("Failed to sign up")
+        }
+    }
 
     return (
         <>
@@ -81,11 +110,8 @@ const Register = () => {
 
                             return errors;
                         }}
-                        onSubmit={(values, { setSubmitting }) => {
-                            setTimeout(() => {
-                                alert(JSON.stringify(values, null, 2));
-                                setSubmitting(false);
-                            }, 400);
+                        onSubmit={async (values, { setSubmitting }) => {
+                          await submitHandle(values)
                         }}
                     >
                         {({
@@ -111,7 +137,7 @@ const Register = () => {
                                             </svg>
                                         </div>
                                     </button>}
-                                    {!!avatar && <Avatar src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReIGs0o2kPLBKHYDW48-OfiH2ExlWiYT5tiQ&usqp=CAU'}/> }
+                                    {!!avatar && <Avatar src={`${process.env.API_URL}${avatar}`}/> }
                                     <input ref={inputFileRef} type="file" onChange={handleChangeFile} hidden />
                                     {!!avatar && <button className={styles.button_delete} onClick={onClickRemoveImage}>
                                         delete avatar

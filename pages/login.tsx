@@ -1,9 +1,38 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Head from "next/head";
 import { Formik } from 'formik';
 import styles from "@/styles/LoginRegister.module.scss";
+import {useFetchAuthMutation, useGetAuthMeQuery} from "@/store/authApi";
+import {ISignIn, ISignInResponse} from "@/model";
+import {useRouter} from "next/router";
+import {setAuthState} from "@/store/slice/authSlice";
+import {useAppDispatch} from "@/hook";
+
 
 const Login = () => {
+    const  router = useRouter()
+    const dispatch = useAppDispatch()
+    const {data} = useGetAuthMeQuery()
+    const [fetchAuth, result] = useFetchAuthMutation()
+
+    useEffect(()=>{
+        if(!!data)router.push('/')
+    },[data])
+
+
+    const submitHandle = async (values:ISignIn) => {
+        // @ts-ignore
+        const {data} : {data:ISignInResponse | undefined } = await (fetchAuth(values))
+        if(!data){
+            return alert('Failed to sign in')
+        }
+        if('token' in data){
+            window.localStorage.setItem('token', data.token);
+            dispatch(setAuthState(true))
+        }
+        router.push('/')
+    }
+
     return (
         <>
             <Head>
@@ -31,11 +60,11 @@ const Login = () => {
                             }
                             return errors;
                         }}
-                        onSubmit={(values, { setSubmitting }) => {
-                            setTimeout(() => {
-                                alert(JSON.stringify(values, null, 2));
-                                setSubmitting(false);
-                            }, 400);
+                        onSubmit={async (values, { setSubmitting }) => {
+                            await submitHandle(values)
+                            values.email = ''
+                            values.password= ''
+
                         }}
                     >
                         {({
@@ -73,7 +102,7 @@ const Login = () => {
                                 {errors.password && touched.password && <div className={styles.input_error}>
                                     {errors.password}
                                 </div>}
-                                <button type="submit" disabled={isSubmitting}  className={styles.button}>
+                                <button type="submit"  className={styles.button}>
                                     Submit
                                 </button>
                             </form>

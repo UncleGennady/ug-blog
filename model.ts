@@ -12,6 +12,36 @@ export type toogleForPostList = {
     popular: string,
 }
 
+export interface  IAuthMeResponse {
+    success: boolean,
+    _id: string,
+    fullName: string,
+    email: string,
+    passwordHash: string,
+    createdAt: string,
+    updatedAt: string,
+    __v: number,
+    avatarUrl?: string,
+}
+
+export interface  ISignIn {
+    email: string,
+    password: string,
+}
+
+export interface  ISignInResponse extends  IAuthMeResponse{
+    token: string,
+}
+
+export interface ISignUp extends  ISignIn {
+    fullName: string,
+    avatarUrl?: string
+}
+
+export  interface  ISignUpResponse extends  ISignInResponse{
+    success: boolean,
+}
+
 export interface ISet<T> {
     add(value: T): this;
     clear(): void;

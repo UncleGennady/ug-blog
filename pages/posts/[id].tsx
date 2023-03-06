@@ -40,7 +40,7 @@ export const getStaticProps : GetStaticProps = async (context) => {
 
 type TComments = {success: boolean, comments:IComment[]} | {message:string};
 
-const Post = ({post, comments}:{post:IPost, comments: TComments}) => {
+const Post = ({post, comments}:{post:IPost, comments: any}) => {
 
     const renderImage = (image:any): any =>{
         if(!image) return null

@@ -1,9 +1,13 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {useRouter} from "next/router";
 import styles from "@/styles/Header.module.scss";
 import Image from "next/image";
 import Link from "next/link";
 import {raleway} from "@/pages/_app";
+import {useGetAuthMeQuery} from "@/store/authApi";
+import { useAppSelector, useAppDispatch } from '@/hook'
+import {setAuthState} from "@/store/slice/authSlice";
+
 
 const navigationPage = [
     {id:1, title: "Home", path:'/'},
@@ -16,6 +20,22 @@ const navigationRegister = [
 
 const Header = () => {
     const {pathname} = useRouter();
+    const {data} = useGetAuthMeQuery()
+    const auth = useAppSelector((state) => state.auth.value)
+    const dispatch = useAppDispatch()
+    useEffect(() => {
+         if(!!data) dispatch(setAuthState(true))
+    }, [data])
+
+    console.log(data)
+
+    const onClickLogout = () => {
+        if(window.confirm("Do you really want to leave ?")){
+            window.localStorage.removeItem('token')
+            dispatch(setAuthState(false))
+        }
+    };
+
     return (
         <header className={`${styles.header} ${raleway.className} `}>
             <nav className={styles.nav}>
@@ -37,7 +57,7 @@ const Header = () => {
                         </li>
                         )
                     )}
-                    {navigationRegister.map(page=>(
+                    {!auth && navigationRegister.map(page=>(
                             <li key={page.id}>
                                 <Link href={page.path} className={`${styles.button} ${pathname === page.path ? styles["link-active"] : null}`}>
                                     {page.title}
@@ -45,6 +65,19 @@ const Header = () => {
                             </li>
                         )
                     )}
+                    {auth &&
+                            <>
+                                <li>
+                                    <Link href={'/add-post'} className={`${styles.button}`}>
+                                        Add post
+                                    </Link>
+                                </li>
+                                <li>
+                                    <button className={`${styles.button}`} onClick={onClickLogout}>
+                                    Log out
+                                    </button>
+                                </li>
+                            </>}
                 </ul>
             </nav>
         </header>

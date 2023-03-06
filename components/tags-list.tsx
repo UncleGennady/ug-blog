@@ -7,8 +7,8 @@ const TagsList = ({tags, setCurrentTag}:{tags:string[], setCurrentTag:any}) => {
         <Aside>
             <h2>Tags</h2>
             <ul className={styles.list}>
-                 {tags.map((tag)=>(
-                     <li className={styles.element}>
+                 {tags.map((tag,index)=>(
+                     <li key={index} className={styles.element}>
                          <button className={styles.button} onClick={()=>setCurrentTag(tag)}>
                              <div className={styles.icon}>
                                  <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv" focusable="false"

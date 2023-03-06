@@ -4,13 +4,13 @@ import Aside from "@/components/aside";
 import {IComment} from "@/model";
 import Avatar from "@/components/avatar";
 
-const CommemtsList = ({comments}:{comments:IComment[]}) => {
+const CommentsList = ({comments}:{comments:IComment[]}) => {
     return (
         <Aside>
             <h2>Comments</h2>
             <ul className={styles.list}>
                 {comments.map((comment)=>(
-                    <li className={styles.item}>
+                    <li key={comment._id} className={styles.item}>
                         <Avatar src={`${process.env.API_URL}${comment.author.avatarUrl}`}/>
                         <div className={styles.info}>
                             <h4>{comment.author.fullName}</h4>
@@ -23,4 +23,4 @@ const CommemtsList = ({comments}:{comments:IComment[]}) => {
     );
 };
 
-export default CommemtsList;
+export default CommentsList;

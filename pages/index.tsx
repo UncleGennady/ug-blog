@@ -10,7 +10,7 @@ import Link from "next/link";
 import {IPost, IComment, ISet} from "@/model";
 import Avatar from "@/components/avatar";
 import TagsList from "@/components/tags-list";
-import CommemtsList from "@/components/commemts-list";
+import CommentsList from "@/components/comments-list";
 
 export const getStaticProps : GetStaticProps = async () => {
     const res = await  fetch(`${process.env.API_URL}/posts`)
@@ -133,7 +133,7 @@ export default function Home({posts, lastComments}:{posts:IPost[], lastComments:
             </div>
             <div className={styles.aside_wrapper}>
                 <TagsList tags={memoizedTags} setCurrentTag={setCurrentTag}/>
-                <CommemtsList comments={lastComments}/>
+                <CommentsList comments={lastComments}/>
             </div>
         </div>
 
