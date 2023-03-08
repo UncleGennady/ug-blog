@@ -1,63 +1,29 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import Head from "next/head";
 import styles from "@/styles/LoginRegister.module.scss";
 import {Formik} from "formik";
 import Avatar from "@/components/avatar";
-import {
-    useDeleteAvatarMutation,
-    useFetchAvatarMutation,
-    useFetchRegisterMutation,
-    useGetAuthMeQuery
-} from "@/store/authApi";
+import {useFetchRegisterMutation} from "@/store/authApi";
 import {ISignUpResponse, ISignUp} from "@/model";
 import {useRouter} from "next/router";
+import {useAppSelector, useFetchImg} from "@/hook";
 
 
 const Register = () => {
     const  router = useRouter()
-    const [fetchAvatar] = useFetchAvatarMutation()
-    const [deleteAvatar] = useDeleteAvatarMutation()
+
     const [fetchRegister, results] = useFetchRegisterMutation()
-    const {data} = useGetAuthMeQuery()
-    const [avatar, setAvatar] = useState<string>('')
-    const inputFileRef = useRef(null)
 
+    const auth = useAppSelector((state) => state.auth.value)
     useEffect(()=>{
-        if(!!data)router.push('/')
-    },[data])
+        if(auth)router.push('/')
+    },[auth])
 
-    const handleChangeFile = async(event:any) => {
-        try {
-            console.log(1)
-            const formData = new FormData();
-            const file = event.target.files[0];
-            formData.append('image', file);
-            const {data}:any = await fetchAvatar(formData)
-
-            console.log(data)
-
-            setAvatar(data.url)
-
-        }catch (err){
-            console.warn("ошибка",err);
-            alert('Error getting file!')
-        }
-    };
-
-    const onClickRemoveImage = async() => {
-        try {
-            const {data}:any = await deleteAvatar({data:{ url: avatar}})
-            console.log(data)
-            setAvatar('')
-        }catch (err){
-            console.warn("ошибка",err);
-            alert('Error deleting file!')
-        }
-    };
+    const {previewImg, inputFileRef, handleChangeFile, onClickRemoveImage } = useFetchImg()
 
     const submitHandle = async(values:ISignUp) => {
         try {
-            if(!!avatar) values.avatarUrl = avatar
+            if(!!previewImg) values.avatarUrl = previewImg
             const data:ISignUpResponse | any = await fetchRegister(values);
             console.log(results)
             console.log(data)
@@ -126,7 +92,7 @@ const Register = () => {
                           }) => (
                             <form className={styles.form} onSubmit={handleSubmit}>
                                 <div className={styles.avatar}>
-                                    {!avatar && <button className={styles.avatar_button} onClick={()=> inputFileRef.current.click()}>
+                                    {!previewImg && <button className={styles.avatar_button} onClick={()=> inputFileRef.current.click()}>
                                         <div >
                                             <svg
                                                 className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiAvatar-fallback css-13y7ul3"
@@ -135,11 +101,11 @@ const Register = () => {
                                                 <path
                                                     d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path>
                                             </svg>
-                                        </div>
+                                          </div>
                                     </button>}
-                                    {!!avatar && <Avatar src={`${process.env.API_URL}${avatar}`}/> }
+                                    {!!previewImg && <Avatar src={`${process.env.NEXT_PUBLIC_API_URL}${previewImg}`}/> }
                                     <input ref={inputFileRef} type="file" onChange={handleChangeFile} hidden />
-                                    {!!avatar && <button className={styles.button_delete} onClick={onClickRemoveImage}>
+                                    {!!previewImg && <button className={styles.button_delete} onClick={onClickRemoveImage}>
                                         delete avatar
                                     </button>}
                                 </div>

@@ -11,7 +11,7 @@ const CommentsList = ({comments}:{comments:IComment[]}) => {
             <ul className={styles.list}>
                 {comments.map((comment)=>(
                     <li key={comment._id} className={styles.item}>
-                        <Avatar src={`${process.env.API_URL}${comment.author.avatarUrl}`}/>
+                        <Avatar src={`${process.env.NEXT_PUBLIC_API_URL}${comment.author.avatarUrl}`}/>
                         <div className={styles.info}>
                             <h4>{comment.author.fullName}</h4>
                             <p>{comment.text}</p>

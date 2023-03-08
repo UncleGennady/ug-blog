@@ -7,7 +7,7 @@ import {IAuthMeResponse, ISignIn, ISignInResponse, ISignUp, ISignUpResponse} fro
 export const authApi = createApi({
     reducerPath: 'authApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: process.env.API_URL,
+        baseUrl: process.env.NEXT_PUBLIC_API_URL,
         prepareHeaders: (headers, { getState }) => {
             const token = !!(window.localStorage.getItem('token')) ? window.localStorage.getItem('token') : ''
             if (!!token) {

@@ -2,22 +2,22 @@ import React, {useEffect} from 'react';
 import Head from "next/head";
 import { Formik } from 'formik';
 import styles from "@/styles/LoginRegister.module.scss";
-import {useFetchAuthMutation, useGetAuthMeQuery} from "@/store/authApi";
+import {useFetchAuthMutation} from "@/store/authApi";
 import {ISignIn, ISignInResponse} from "@/model";
 import {useRouter} from "next/router";
 import {setAuthState} from "@/store/slice/authSlice";
-import {useAppDispatch} from "@/hook";
+import {useAppDispatch, useAppSelector} from "@/hook";
 
 
 const Login = () => {
     const  router = useRouter()
     const dispatch = useAppDispatch()
-    const {data} = useGetAuthMeQuery()
     const [fetchAuth, result] = useFetchAuthMutation()
 
+    const auth = useAppSelector((state) => state.auth.value)
     useEffect(()=>{
-        if(!!data)router.push('/')
-    },[data])
+        if(auth)router.push('/')
+    },[auth])
 
 
     const submitHandle = async (values:ISignIn) => {

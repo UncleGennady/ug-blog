@@ -13,7 +13,7 @@ const Comments = ({comments}:{comments:IComment[]}) => {
                    {comments.map((comment)=>(
                        <li className={styles.comment}>
                            <div className={styles.comment_info}>
-                               <Avatar src={`${process.env.API_URL}${comment.author.avatarUrl}`} />
+                               <Avatar src={`${process.env.NEXT_PUBLIC_API_URL}${comment.author.avatarUrl}`} />
                                <div className={styles.comment_text}>
                                    <p>
                                        <strong>

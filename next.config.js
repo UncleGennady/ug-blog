@@ -12,13 +12,11 @@ const nextConfig = {
     ],
   },
   env:{
-    API_URL: 'https://ug-mern-blog.onrender.com'
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL
   },
 }
 
 module.exports = nextConfig
 
-
-//
-// const removeImports = require('next-remove-imports')();
-// module.exports = removeImports({});
+const removeImports = require('next-remove-imports')();
+module.exports = removeImports({});

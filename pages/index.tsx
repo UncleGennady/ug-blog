@@ -13,11 +13,11 @@ import TagsList from "@/components/tags-list";
 import CommentsList from "@/components/comments-list";
 
 export const getStaticProps : GetStaticProps = async () => {
-    const res = await  fetch(`${process.env.API_URL}/posts`)
+    const res = await  fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts`)
     const {posts}:{posts:IPost[]} = await res.json()
     const postsReverse:IPost[] = posts.reverse()
 
-    const resLastComments = await  fetch(`${process.env.API_URL}/comments`)
+    const resLastComments = await  fetch(`${process.env.NEXT_PUBLIC_API_URL}/comments`)
 
     const {comments}:{comments:IComment[]} = await resLastComments.json()
     // const comments:{success:boolean, comments:IComment[]} | {message:string} = await resLastComments.json()
@@ -58,8 +58,8 @@ export default function Home({posts, lastComments}:{posts:IPost[], lastComments:
             >
                 {!!post.imageUrl && <div className={styles.wrapper_image}>
                     <Image
-                    loader={() => `${process.env.API_URL}${post.imageUrl}` }
-                    src={`${process.env.API_URL}${post.imageUrl}`}
+                    loader={() => `${process.env.NEXT_PUBLIC_API_URL}${post.imageUrl}` }
+                    src={`${process.env.NEXT_PUBLIC_API_URL}${post.imageUrl}`}
                     alt={"#"}
                     unoptimized={true}
                     fill
@@ -67,7 +67,7 @@ export default function Home({posts, lastComments}:{posts:IPost[], lastComments:
                     </div>}
                 <div className={styles.info}>
                     <div className={styles.privat_info}>
-                        <Avatar src={`${process.env.API_URL}${post.author.avatarUrl}`}/>
+                        <Avatar src={`${process.env.NEXT_PUBLIC_API_URL}${post.author.avatarUrl}`}/>
                         <div>
                             <p>
                                 {post.author.fullName}

@@ -4,7 +4,7 @@ export const getDateClosing = () => {
     const month = [
         'January',
         'February',
-        'Martha',
+        'March',
         'April',
         'May',
         'June',

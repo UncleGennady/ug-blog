@@ -16,6 +16,7 @@
     "@types/react-dom": "18.0.11",
     "@types/react-redux": "^7.1.25",
     "@uiw/react-markdown-editor": "^5.11.1",
+    "@uiw/react-md-editor": "^3.6.0",
     "eslint": "8.34.0",
     "eslint-config-next": "13.1.6",
     "formik": "^2.2.9",

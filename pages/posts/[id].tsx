@@ -12,7 +12,7 @@ import Card from "@/components/card";
 import Avatar from "@/components/avatar";
 
 export const getStaticPaths : GetStaticPaths = async () => {
-    const res = await fetch(`${process.env.API_URL}/posts`)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts`)
     const {posts} = await res.json()
 
     const paths = posts.map((post: IPost) => ({
@@ -26,10 +26,10 @@ export const getStaticPaths : GetStaticPaths = async () => {
 }
 export const getStaticProps : GetStaticProps = async (context) => {
     const {id}:any = context.params
-    const res = await  fetch(`${process.env.API_URL}/posts/${id}`)
+    const res = await  fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts/${id}`)
     const {doc} = await res.json()
 
-    const resComments = await  fetch(`${process.env.API_URL}/comments/${id}`)
+    const resComments = await  fetch(`${process.env.NEXT_PUBLIC_API_URL}/comments/${id}`)
     const comments:{success:boolean, comments:IComment[]} | {message:string} = await resComments.json()
 
     return {
@@ -47,8 +47,8 @@ const Post = ({post, comments}:{post:IPost, comments: any}) => {
         return (
             <div className={styles.wrapper_image}>
                 <Image
-                    loader={() => `${process.env.API_URL}${post.imageUrl}` }
-                    src={`${process.env.API_URL}${post.imageUrl}`}
+                    loader={() => `${process.env.NEXT_PUBLIC_API_URL}${post.imageUrl}` }
+                    src={`${process.env.NEXT_PUBLIC_API_URL}${post.imageUrl}`}
                     alt={"#"}
                     unoptimized={true}
                     fill
@@ -102,7 +102,7 @@ const Post = ({post, comments}:{post:IPost, comments: any}) => {
                     <div className={styles.privat_info}>
                         <div className={styles.author}>
                             <h4>{post.author.fullName}</h4>
-                            <Avatar src={`${process.env.API_URL}${post.author.avatarUrl}`} />
+                            <Avatar src={`${process.env.NEXT_PUBLIC_API_URL}${post.author.avatarUrl}`} />
                         </div>
                         <p>
                             {getDate(post.createdAt)}
