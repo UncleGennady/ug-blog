@@ -2,7 +2,7 @@ import {useMemo, useState} from "react";
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '@/styles/Home.module.scss'
-import {GetStaticPaths, GetStaticProps} from 'next'
+import {GetServerSideProps, GetStaticPaths, GetStaticProps} from 'next'
 import {fetch} from "next/dist/compiled/@edge-runtime/primitives/fetch";
 import Aside from "@/components/aside";
 import {getDate, toggleForPostList} from "@/utils";
@@ -11,6 +11,9 @@ import {IPost, IComment, ISet} from "@/model";
 import Avatar from "@/components/avatar";
 import TagsList from "@/components/tags-list";
 import CommentsList from "@/components/comments-list";
+import PostButton from "@/components/post-button";
+import {useGetAuthMeQuery} from "@/store/authApi";
+
 
 export const getStaticProps : GetStaticProps = async () => {
     const res = await  fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts`)
@@ -27,9 +30,11 @@ export const getStaticProps : GetStaticProps = async () => {
     }
 }
 
+
 export default function Home({posts, lastComments}:{posts:IPost[], lastComments: IComment[]}) {
     const [toggle, setToggle] = useState<string>(toggleForPostList.new);
     const [currentTag, setCurrentTag] = useState<string | null >(null);
+    const {data} = useGetAuthMeQuery()
     const toggleHandler = (value:string ) => () => setToggle(value)
     const getTags = ()=>{
         const value:ISet<string> = new Set
@@ -56,6 +61,7 @@ export default function Home({posts, lastComments}:{posts:IPost[], lastComments:
                 key={post._id}
                 className={styles.card}
             >
+                {!!data && data._id === post.author._id && <PostButton id={post._id}/>}
                 {!!post.imageUrl && <div className={styles.wrapper_image}>
                     <Image
                     loader={() => `${process.env.NEXT_PUBLIC_API_URL}${post.imageUrl}` }
@@ -107,11 +113,11 @@ export default function Home({posts, lastComments}:{posts:IPost[], lastComments:
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         </Head>
         <div className={styles.filters}>
-            <div className={toggle === toggleForPostList.new && styles.toggle_active}
+            <div className={`${styles.toggle} ${toggle === toggleForPostList.new && styles.toggle_active}`}
                  onClick={toggleHandler(toggleForPostList.new)}>
                 New
             </div>
-            <div className={toggle === toggleForPostList.popular && styles.toggle_active}
+            <div className={`${styles.toggle} ${toggle === toggleForPostList.popular && styles.toggle_active}`}
                  onClick={toggleHandler(toggleForPostList.popular)}>
                 Popular
             </div>

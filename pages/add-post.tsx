@@ -1,14 +1,23 @@
-import React,{useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Head from "next/head";
 import styles from "@/styles/AddPost.module.scss";
 import PostForm from "@/components/post-form";
 import {ICreatedPost} from "@/model";
+import {useAppSelector} from "@/hook";
+import {useRouter} from "next/router";
+import {useCreatePostMutation} from "@/store/postApi";
 
 
 const AddPost = () => {
     const [textMarkdown, setTextMarkdown] = useState("");
+    const  router = useRouter()
+    const [createPost, results] = useCreatePostMutation();
+    const auth = useAppSelector((state) => state.auth.value)
+    useEffect(()=>{
+        if(!auth)router.push('/login')
+    },[auth])
     const submitHandle = (values: ICreatedPost) =>{
-        console.log(values)
+        confirm("create post", createPost({...values}))
     }
     return (
         <>

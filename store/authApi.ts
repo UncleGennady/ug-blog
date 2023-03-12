@@ -39,14 +39,14 @@ export const authApi = createApi({
                 body: params
             })
         }),
-        fetchAvatar: build.mutation<any, any>({
+        fetchAvatar: build.mutation<any, string>({
             query:(params)=>({
                 url:`/avatar`,
                 method:'POST',
                 body:params
             })
         }),
-        deleteAvatar: build.mutation<any, any>({
+        deleteAvatar: build.mutation<any, string>({
             query:(params)=>({
                 url:`/avatar`,
                 method:'DELETE',

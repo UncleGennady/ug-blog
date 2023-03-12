@@ -79,14 +79,30 @@ export interface IComment extends IDate{
     __v: number,
 }
 export interface ICreatedPost {
-    imageUrl: string,
-    tags: string[],
+    imageUrl?: string,
+    tags?: string[],
     text: string,
     title:string
+}
+
+export interface IUpdatedPost extends ICreatedPost{
+    id: string,
+}
+
+export interface IDeletePost {
+    id: string,
 }
 
 export interface ICreatedPostResponse {
     success: boolean,
     post:IPost
+}
+
+export interface IUpdatedPostResponse {
+    success: boolean,
+}
+
+export interface IDeletePostResponse {
+    success: boolean,
 }
 

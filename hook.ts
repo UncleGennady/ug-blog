@@ -8,11 +8,12 @@ export const useAppDispatch: () => AppDispatch = useDispatch
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 
 
-export const useFetchImg = ()=>{
-    const [fetchAvatar] = useFetchAvatarMutation()
-    const [deleteAvatar] = useDeleteAvatarMutation()
-    const inputFileRef = useRef(null)
-    const [previewImg, setPreviewImg] = useState<string>('')
+export const useFetchImg = (initialImg?:string) =>{
+    const initialState = initialImg || ""  ;
+    const [fetchAvatar] = useFetchAvatarMutation();
+    const [deleteAvatar] = useDeleteAvatarMutation();
+    const inputFileRef = useRef(null);
+    const [previewImg, setPreviewImg] = useState<string>(initialState);
     const handleChangeFile = async(event:any) => {
         try {
             console.log(1)
@@ -42,5 +43,5 @@ export const useFetchImg = ()=>{
         }
     };
 
-    return {previewImg, inputFileRef, handleChangeFile, onClickRemoveImage }
+    return {previewImg, setPreviewImg, inputFileRef, handleChangeFile, onClickRemoveImage };
 }

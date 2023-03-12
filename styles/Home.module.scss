@@ -11,9 +11,11 @@
   line-height: 25px;
   font-size: 20px;
   div {
-    cursor: pointer;
     padding: 20px;
   }
+}
+.toggle{
+  cursor: pointer;
 }
 .toggle_active{
   border-bottom: 2px solid #263159 ;
@@ -24,6 +26,7 @@
     flex-direction: row;
     gap: 10px;
   button{
+    cursor: pointer;
     background: initial;
     width: 25px;
     height: 25px;
@@ -45,6 +48,7 @@
   gap:40px
 }
 .card{
+  position: relative;
   width: 100%;
   height: max-content;
   overflow: hidden;

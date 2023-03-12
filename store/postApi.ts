@@ -1,5 +1,5 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/dist/query/react";
-import {ICreatedPost, ICreatedPostResponse} from "@/model";
+import {ICreatedPost, ICreatedPostResponse, IUpdatedPost, IUpdatedPostResponse,IDeletePost, IDeletePostResponse,} from "@/model";
 import {authApi} from "@/store/authApi";
 
 
@@ -17,12 +17,25 @@ export const postApi = createApi({
     endpoints: (build)=> ({
         createPost: build.mutation<ICreatedPostResponse, ICreatedPost >({
             query:(params) => ({
-                url: `/post`,
+                url: `/posts`,
                 method: 'POST',
                 body: params
             }),
         }),
+        updatePost: build.mutation<IUpdatedPostResponse, IUpdatedPost >({
+            query:({title ,tags, text, imageUrl, id}) => ({
+                url: `/posts/${id}`,
+                method: 'PATCH',
+                body: {title, text, tags, imageUrl}
+            })
+        }),
+        deletePost: build.mutation<IDeletePostResponse, IDeletePost >({
+            query:(id) => ({
+                url: `/posts/${id}`,
+                method: 'DELETE',
+            })
+        }),
     })
 })
 
-export const {useCreatePostMutation } = postApi
+export const {useCreatePostMutation, useUpdatePostMutation, useDeletePostMutation } = postApi
