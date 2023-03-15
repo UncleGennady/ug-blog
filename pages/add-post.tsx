@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Head from "next/head";
 import styles from "@/styles/AddPost.module.scss";
 import PostForm from "@/components/post-form";
-import {ICreatedPost} from "@/model";
+import {ICreatedPost, ICreatedPostResponse} from "@/model";
 import {useAppSelector} from "@/hook";
 import {useRouter} from "next/router";
 import {useCreatePostMutation} from "@/store/postApi";
@@ -11,13 +11,17 @@ import {useCreatePostMutation} from "@/store/postApi";
 const AddPost = () => {
     const [textMarkdown, setTextMarkdown] = useState("");
     const  router = useRouter()
-    const [createPost, results] = useCreatePostMutation();
+    const [createPost] = useCreatePostMutation();
     const auth = useAppSelector((state) => state.auth.value)
     useEffect(()=>{
         if(!auth)router.push('/login')
     },[auth])
-    const submitHandle = (values: ICreatedPost) =>{
-        confirm("create post", createPost({...values}))
+    const submitHandle = async (values: ICreatedPost) =>{
+        if(window.confirm("Create post?")){
+            const {data}:{data:ICreatedPostResponse} | any = await createPost({...values})
+            !!data.success && router.push(`/`)
+
+        }
     }
     return (
         <>

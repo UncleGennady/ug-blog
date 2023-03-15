@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {GetStaticPaths, GetStaticProps} from "next";
 import {fetch} from "next/dist/compiled/@edge-runtime/primitives/fetch";
-import {IComment, ICreatedPost, IPost} from "@/model";
+import {IComment, IUpdatedPostResponse, IPost, IUpdatedPost, ICreatedPost} from "@/model";
 import {useRouter} from "next/router";
 import {useAppSelector} from "@/hook";
 import Head from "next/head";
 import styles from "@/styles/AddPost.module.scss";
 import PostForm from "@/components/post-form";
+import {useGetAuthMeQuery} from "@/store/authApi";
+import {useUpdatePostMutation} from "@/store/postApi";
 
 export const getStaticPaths : GetStaticPaths = async () => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts`)
@@ -35,13 +37,19 @@ export const getStaticProps : GetStaticProps = async (context) => {
 
 const Edit = ({post}:{post:IPost}) => {
     const [textMarkdown, setTextMarkdown] = useState(post.text);
+    const {data} = useGetAuthMeQuery();
+    const [updatePost, result] = useUpdatePostMutation()
     const  router = useRouter()
     const auth = useAppSelector((state) => state.auth.value)
-    // useEffect(()=>{
-    //     if(!auth)router.push('/login')
-    // },[auth])
-    const submitHandle = (values: ICreatedPost) =>{
-        console.log(values)
+    useEffect(()=>{
+        if(!auth)router.push('/login')
+        if(!!data &&  data._id !== post.author._id) router.push('/')
+    },[auth, data])
+    const submitHandle = async (values: ICreatedPost) =>{
+        if(window.confirm("Update post?")){
+            const {data}:{data:IUpdatedPostResponse} | any = await updatePost({...values, id:post._id})
+            !!data.success && router.push(`/`)
+        }
     }
     return (
         <>

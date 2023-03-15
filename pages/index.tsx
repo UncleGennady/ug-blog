@@ -2,7 +2,7 @@ import {useMemo, useState} from "react";
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '@/styles/Home.module.scss'
-import {GetServerSideProps, GetStaticPaths, GetStaticProps} from 'next'
+import {GetStaticProps} from 'next'
 import {fetch} from "next/dist/compiled/@edge-runtime/primitives/fetch";
 import Aside from "@/components/aside";
 import {getDate, toggleForPostList} from "@/utils";
@@ -29,6 +29,7 @@ export const getStaticProps : GetStaticProps = async () => {
         revalidate: 30,
     }
 }
+
 
 
 export default function Home({posts, lastComments}:{posts:IPost[], lastComments: IComment[]}) {

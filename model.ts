@@ -89,7 +89,7 @@ export interface IUpdatedPost extends ICreatedPost{
     id: string,
 }
 
-export interface IDeletePost {
+export interface IDeleteRequest {
     id: string,
 }
 
@@ -102,7 +102,19 @@ export interface IUpdatedPostResponse {
     success: boolean,
 }
 
-export interface IDeletePostResponse {
+export interface IDeleteResponse {
     success: boolean,
 }
+export interface ICreatedComment {
+    text:string,
+    id:string,
+}
+
+export interface ICreatedCommentResponse {
+    success: boolean,
+    comment: IComment,
+}
+
+
+
 

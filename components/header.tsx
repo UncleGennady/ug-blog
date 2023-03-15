@@ -19,7 +19,8 @@ const navigationRegister = [
 ]
 
 const Header = () => {
-    const {pathname} = useRouter();
+    const {pathname,} = useRouter();
+    const router = useRouter()
     const {data} = useGetAuthMeQuery()
     const auth = useAppSelector((state) => state.auth.value)
     const dispatch = useAppDispatch()
@@ -33,6 +34,7 @@ const Header = () => {
         if(window.confirm("Do you really want to leave ?")){
             window.localStorage.removeItem('token')
             dispatch(setAuthState(false))
+            router.push('/')
         }
     };
 

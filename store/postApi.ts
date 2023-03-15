@@ -1,5 +1,5 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/dist/query/react";
-import {ICreatedPost, ICreatedPostResponse, IUpdatedPost, IUpdatedPostResponse,IDeletePost, IDeletePostResponse,} from "@/model";
+import {ICreatedPost, ICreatedPostResponse, IUpdatedPost, IUpdatedPostResponse,IDeleteRequest, IDeleteResponse,} from "@/model";
 import {authApi} from "@/store/authApi";
 
 
@@ -29,7 +29,7 @@ export const postApi = createApi({
                 body: {title, text, tags, imageUrl}
             })
         }),
-        deletePost: build.mutation<IDeletePostResponse, IDeletePost >({
+        deletePost: build.mutation<IDeleteResponse, IDeleteRequest >({
             query:(id) => ({
                 url: `/posts/${id}`,
                 method: 'DELETE',

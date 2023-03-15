@@ -3,7 +3,7 @@ import {Formik} from "formik";
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import dynamic from "next/dynamic";
-import {ICreatedPost} from "@/model";
+import {ICreatedPost, IUpdatedPost} from "@/model";
 import styles from "@/styles/PostForm.module.scss";
 import {useFetchImg} from "@/hook";
 import Image from "next/image";
@@ -14,8 +14,7 @@ const MDEditor = dynamic(
     { ssr: false }
 );
 
-const PostForm = ({title, tags, img, textMarkdown, setTextMarkdown, submitHandle}:{title?:string, tags?:string[], img?:string, textMarkdown:string, setTextMarkdown:any, submitHandle:(values:ICreatedPost)=>void}) => {
-    console.log(img);
+const PostForm = ({title, tags, img, textMarkdown, setTextMarkdown, submitHandle}:{title?:string, tags?:string[], img?:string, textMarkdown:string, setTextMarkdown:any, submitHandle:(values:ICreatedPost | IUpdatedPost)=>void}) => {
     const {previewImg, inputFileRef, handleChangeFile, onClickRemoveImage } = useFetchImg(img);
     return (
         <Formik
@@ -32,10 +31,6 @@ const PostForm = ({title, tags, img, textMarkdown, setTextMarkdown, submitHandle
             onSubmit={ (values, { setSubmitting }) => {
                 const localValues:ICreatedPost = {imageUrl : previewImg, ...values, tags: values.tags.trim().split(' '), text : textMarkdown }
                 submitHandle(localValues)
-                setTimeout(() => {
-                    alert(JSON.stringify(localValues, null, 2));
-                    setSubmitting(false);
-                }, 400);
             }}
         >
             {({

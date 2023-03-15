@@ -2,11 +2,15 @@ import React from 'react';
 import Link from "next/link";
 import styles from '@/styles/PostButton.module.scss'
 import {useDeletePostMutation} from "@/store/postApi";
+import {useRouter} from "next/router";
 
 const PostButton = ({id}:{id:string}) => {
-    const [deletePost, result] = useDeletePostMutation()
+    const [deletePost] = useDeletePostMutation()
+    const  router = useRouter()
     const deleteHandle = () => {
-            confirm('Delete post ?', deletePost(id))
+        if(window.confirm('Delete post ?')){
+            deletePost(id)
+        }
     }
     return (
         <div className={styles.post_button}>

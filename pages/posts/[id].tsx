@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Head from 'next/head'
 import {GetStaticPaths, GetStaticProps} from "next";
 import {fetch} from "next/dist/compiled/@edge-runtime/primitives/fetch";
@@ -10,6 +10,9 @@ import {getDate} from "@/utils";
 import Comments from "@/components/comments";
 import Card from "@/components/card";
 import Avatar from "@/components/avatar";
+import {useCreateCommentMutation, useDeleteCommentMutation} from "@/store/commentApi";
+import PostButton from "@/components/post-button";
+import {useGetAuthMeQuery} from "@/store/authApi";
 
 export const getStaticPaths : GetStaticPaths = async () => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts`)
@@ -41,6 +44,10 @@ export const getStaticProps : GetStaticProps = async (context) => {
 type TComments = {success: boolean, comments:IComment[]} | {message:string};
 
 const Post = ({post, comments}:{post:IPost, comments: any}) => {
+    const {data} = useGetAuthMeQuery()
+    const [createComment] = useCreateCommentMutation()
+    const [deleteComment] = useDeleteCommentMutation()
+    const [newComment, setNewComment] = useState('')
 
     const renderImage = (image:any): any =>{
         if(!image) return null
@@ -57,6 +64,15 @@ const Post = ({post, comments}:{post:IPost, comments: any}) => {
         )
     }
 
+    const addCommentHandle = ()=>{
+
+        createComment({text:newComment, id: post._id})
+    }
+
+    const deleteCommentHandle = (id:string)=> () =>{
+        deleteComment(id)
+    }
+
 
     return (
         <>
@@ -66,6 +82,7 @@ const Post = ({post, comments}:{post:IPost, comments: any}) => {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
             <Card>
+                {!!data && data._id === post.author._id && <PostButton id={post._id}/>}
                 {renderImage(post.imageUrl)}
                 <h1 className={styles.title}>
                     {post.title}
@@ -110,7 +127,7 @@ const Post = ({post, comments}:{post:IPost, comments: any}) => {
                     </div>
                 </div>
             </Card>
-            <Comments comments={comments.comments} />
+            <Comments comments={comments.comments} submitHandle={addCommentHandle} deleteHandle={deleteCommentHandle} newComment={newComment} setNewComment={setNewComment} />
         </>
     );
 };

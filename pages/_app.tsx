@@ -2,7 +2,7 @@ import '@/styles/globals.scss'
 import type { AppProps } from 'next/app'
 import Head from "next/head";
 import Layout from "@/components/layout";
-import { Raleway } from '@next/font/google'
+import { Raleway } from "next/font/google"
 import {store} from "@/store";
 import {Provider} from "react-redux";
 

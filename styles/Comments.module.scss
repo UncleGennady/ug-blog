@@ -56,6 +56,7 @@
   font-weight: 700;
 }
 .comment{
+  position: relative;
   padding: 10px;
   background: white;
   box-shadow: 0 0 3px 1px #495579;
@@ -70,5 +71,21 @@
   }
   &_date{
     font-size: 14px;
+  }
+}
+.delete{
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  border: 0;
+  border-radius: 50%;
+  background: initial;
+  transition: 0.3s;
+  &:hover{
+    transform: rotate(180deg) scale(1.2);
+    background: #ff6a6a;
   }
 }
