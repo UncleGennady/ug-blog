@@ -8,7 +8,7 @@ import {useGetAuthMeQuery} from "@/store/authApi";
 
 const Comments = ({comments, addCommentHandle, deleteHandle, newComment,setNewComment}:{comments:IComment[], addCommentHandle: any, deleteHandle: any, newComment: string, setNewComment:any}) => {
     const {data} = useGetAuthMeQuery()
-    const submitHandle = async(e)=>{
+    const submitHandle = async(e:any)=>{
         e.preventDefault()
         await addCommentHandle()
         await setNewComment('')

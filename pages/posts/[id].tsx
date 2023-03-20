@@ -79,6 +79,7 @@ const Post = ({post, comments}:{post:IPost, comments: any}) => {
     }
 
     const deleteCommentHandle = (id:string)=> () =>{
+        // @ts-ignore
         deleteComment(id)
     }
 
