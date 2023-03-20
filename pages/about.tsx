@@ -2,9 +2,9 @@ import React from 'react';
 import Head from "next/head";
 import styles from "@/styles/About.module.scss";
 import {ITechnologies, ITechnology} from "@/model";
-import {GetStaticProps} from "next";
+import {GetServerSideProps} from "next";
 
-export const getStaticProps:GetStaticProps = async () => {
+export const getServerSideProps:GetServerSideProps = async () => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/technologies`)
     const data = await res.json()
 
