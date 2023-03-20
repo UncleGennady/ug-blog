@@ -1,0 +1,47 @@
+.article{
+  padding: 50px;
+  letter-spacing: 2px;
+  line-height: 40px;
+  font-size: 28px;
+}
+.technologies_wrapper{
+  display: flex;
+  justify-content: space-around;
+  gap:40px;
+
+}
+.technologies{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+.list{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-bottom: 5px;
+}
+.item{
+  padding: 10px;
+  transition: .5s;
+  &:hover{
+    border-bottom: 2px solid #263159;
+    transform: scale(1.1);
+  }
+  a{
+    display: flex;
+    gap: 15px;
+    align-items: center;
+  }
+}
+.github_link{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  transition: .5s;
+  &:hover{
+    box-shadow:  0 0 14px 1px   #263159;
+    transform: scale(1.3) ;
+  }
+}

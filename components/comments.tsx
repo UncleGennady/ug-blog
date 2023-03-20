@@ -6,14 +6,19 @@ import Avatar from "@/components/avatar";
 import {getDate} from "@/utils";
 import {useGetAuthMeQuery} from "@/store/authApi";
 
-const Comments = ({comments, submitHandle, deleteHandle, newComment,setNewComment}:{comments:IComment[], submitHandle: ()=> void, deleteHandle: any, newComment: string, setNewComment:any}) => {
+const Comments = ({comments, addCommentHandle, deleteHandle, newComment,setNewComment}:{comments:IComment[], addCommentHandle: any, deleteHandle: any, newComment: string, setNewComment:any}) => {
     const {data} = useGetAuthMeQuery()
+    const submitHandle = async(e)=>{
+        e.preventDefault()
+        await addCommentHandle()
+        await setNewComment('')
+    }
     return (
        <Card>
            <div>
                {!!comments ? <ul className={styles.comments}>
                    {comments.map((comment)=>(
-                       <li className={styles.comment}>
+                       <li key={comment._id} className={styles.comment}>
                            <div className={styles.comment_info}>
                                <Avatar src={`${process.env.NEXT_PUBLIC_API_URL}${comment.author.avatarUrl}`} />
                                <div className={styles.comment_text}>

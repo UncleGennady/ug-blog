@@ -114,6 +114,21 @@ export interface ICreatedCommentResponse {
     success: boolean,
     comment: IComment,
 }
+export interface ITechnology {
+    id:string,
+    name:string,
+    link:string
+}
+export interface ITechnologies {
+    backend:{
+        gitHubLink: string,
+        technologies:ITechnology[],
+    },
+    frontend:{
+        gitHubLink: string,
+        technologies:ITechnology[],
+    },
+}
 
 
 

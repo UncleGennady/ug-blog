@@ -13,6 +13,7 @@ import Avatar from "@/components/avatar";
 import {useCreateCommentMutation, useDeleteCommentMutation} from "@/store/commentApi";
 import PostButton from "@/components/post-button";
 import {useGetAuthMeQuery} from "@/store/authApi";
+import {useRouter} from "next/router";
 
 export const getStaticPaths : GetStaticPaths = async () => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts`)
@@ -48,6 +49,7 @@ const Post = ({post, comments}:{post:IPost, comments: any}) => {
     const [createComment] = useCreateCommentMutation()
     const [deleteComment] = useDeleteCommentMutation()
     const [newComment, setNewComment] = useState('')
+    const  router = useRouter()
 
     const renderImage = (image:any): any =>{
         if(!image) return null
@@ -64,9 +66,16 @@ const Post = ({post, comments}:{post:IPost, comments: any}) => {
         )
     }
 
-    const addCommentHandle = ()=>{
-
-        createComment({text:newComment, id: post._id})
+    const addCommentHandle = async ()=>{
+        try{
+            const res = await createComment({text:newComment, id: post._id})
+            if(!!res.error){throw new Error(res.error.data.message)}
+        }catch(error){
+            alert(error)
+            if(window.confirm("Do you want sign in?")){
+                router.push('/login')
+            }
+        }
     }
 
     const deleteCommentHandle = (id:string)=> () =>{
@@ -127,7 +136,7 @@ const Post = ({post, comments}:{post:IPost, comments: any}) => {
                     </div>
                 </div>
             </Card>
-            <Comments comments={comments.comments} submitHandle={addCommentHandle} deleteHandle={deleteCommentHandle} newComment={newComment} setNewComment={setNewComment} />
+            <Comments comments={comments.comments} addCommentHandle={addCommentHandle} deleteHandle={deleteCommentHandle} newComment={newComment} setNewComment={setNewComment} />
         </>
     );
 };
