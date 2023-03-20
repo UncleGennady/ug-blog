@@ -10,3 +10,11 @@
   gap: 30px;
 
 }
+
+@media(max-width:700px) {
+  .card{
+    margin-top:20px;
+    padding: 20px;
+    gap: 20px;
+  }
+}

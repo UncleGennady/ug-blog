@@ -41,15 +41,16 @@ const Header = () => {
     return (
         <header className={`${styles.header} ${raleway.className} `}>
             <nav className={styles.nav}>
-               <Link href={'/'} className={styles.logo}>
-                   <Image
-                       src="/ug_logo.svg"
-                       alt="Picture of the author"
-                       width={50}
-                       height={50}
-                       placeholder= "blur"
-                       blurDataURL={'/ug_logo.svg'}
-                   />
+               <Link href={'/'} className={styles.logo_wrapper}>
+                   <div className={styles.logo}>
+                       <Image
+                           src="/ug_logo.svg"
+                           alt="Picture of the author"
+                           fill
+                           placeholder= "blur"
+                           blurDataURL={'/ug_logo.svg'}
+                       />
+                   </div>
                </Link>
                 <ul className={styles.ul}>
                     {navigationPage.map(page=>(

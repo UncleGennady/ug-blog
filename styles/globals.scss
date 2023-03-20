@@ -106,3 +106,24 @@ input{
 button{
   font-family: '__Raleway_d1723a', '__Raleway_Fallback_d1723a';
 }
+
+@media(max-width:700px) {
+  h1{
+    font-size: 22px;
+  }
+  h2{
+    font-size:20px;
+  }
+  h3{
+    font-size:18px;
+  }
+  h4{
+    font-size:16px;
+  }
+  div{
+    font-size: 16px;
+  }
+  p{
+    font-size: 16px;
+  }
+}

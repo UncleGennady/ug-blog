@@ -21,14 +21,20 @@
   }
 
 }
-.logo{
-  padding: 10px;
+.logo_wrapper{
+  padding: 15px;
   border-radius: 50%;
   background: #FFFBEB;
   transition: .3s;
+
  &:hover{
    transform:scale(1.1) ;
  }
+}
+.logo{
+  width: 70px;
+  height: 70px;
+  position: relative;
 }
 .button{
   font-size: inherit;
@@ -51,4 +57,52 @@
 }
 .link-active{
   border-bottom: 2px solid #FFFBEB;
+}
+
+
+@media(max-width:640px) {
+
+  .nav{
+    padding: 5px 20px;
+
+
+    .ul{
+      font-size: 18px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+  }
+
+  .logo_wrapper{
+    padding: 10px;
+  }
+  .logo{
+    width: 35px;
+    height: 35px;
+  }
+  .button{
+    padding: 3px;
+    border-radius: 4px;
+  }
+  .link{
+
+  }
+}
+
+@media(max-width:420px){
+  .logo_wrapper{
+    padding: 10px;
+
+  }
+  .logo{
+    width: 25px;
+    height: 25px;
+  }
+  .nav{
+    .ul{
+      font-size: 16px;
+      gap: 8px;
+    }
+  }
 }

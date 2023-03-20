@@ -7,3 +7,9 @@
   box-shadow: 0 0 15px 0 #495579;
   overflow: hidden;
 }
+
+@media(max-width:520px) {
+    .aside{
+      display: none;
+    }
+}

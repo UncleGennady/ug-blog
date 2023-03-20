@@ -96,3 +96,26 @@
     transform: scale(1.01);
   }
 }
+@media(max-width:700px) {
+  .title{
+    font-size: 22px;
+  }
+  .tags{
+    font-size: 18px;
+  }
+}
+
+@media(max-width:520px) {
+  .title{
+    font-size: 20px;
+  }
+  .tags{
+    font-size: 16px;
+  }
+  .preview_wrapper{
+    padding-top: 20px;
+  }
+  .form{
+    padding: 20px 0;
+  }
+}

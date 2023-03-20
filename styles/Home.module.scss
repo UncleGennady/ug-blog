@@ -111,3 +111,30 @@
   gap: 40px;
   width: 25%;
 }
+
+@media(max-width:1200px) {
+  .wrapper_cards{
+    width: 60%;
+    gap:30px
+  }
+  .aside_wrapper{
+    gap: 30px;
+    width: 37%;
+  }
+}
+@media(max-width:520px) {
+  .wrapper_cards{
+    width: 100%;
+  }
+  .filters{
+    div{
+      padding: 10px;
+    }
+  }
+  .wrapper{
+    padding-top:20px;
+  }
+  .wrapper_image{
+    height: 200px;
+  }
+}
