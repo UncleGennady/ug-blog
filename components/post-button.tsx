@@ -9,6 +9,7 @@ const PostButton = ({id}:{id:string}) => {
     const  router = useRouter()
     const deleteHandle = () => {
         if(window.confirm('Delete post ?')){
+            // @ts-ignore
             deletePost(id)
         }
     }

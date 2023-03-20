@@ -12,12 +12,12 @@ export const useFetchImg = (initialImg?:string) =>{
     const initialState = initialImg || ""  ;
     const [fetchAvatar] = useFetchAvatarMutation();
     const [deleteAvatar] = useDeleteAvatarMutation();
-    const inputFileRef = useRef(null);
+    const inputFileRef:any = useRef(null);
     const [previewImg, setPreviewImg] = useState<string>(initialState);
     const handleChangeFile = async(event:any) => {
         try {
             console.log(1)
-            const formData = new FormData();
+            const formData:any = new FormData();
             const file = event.target.files[0];
             formData.append('image', file);
             const {data}:any = await fetchAvatar(formData)

@@ -16,6 +16,7 @@ const MDEditor = dynamic(
 
 const PostForm = ({title, tags, img, textMarkdown, setTextMarkdown, submitHandle}:{title?:string, tags?:string[], img?:string, textMarkdown:string, setTextMarkdown:any, submitHandle:(values:ICreatedPost | IUpdatedPost)=>void}) => {
     const {previewImg, inputFileRef, handleChangeFile, onClickRemoveImage } = useFetchImg(img);
+
     return (
         <Formik
             initialValues={{ title: title, tags: !!tags ? tags.join(' ') : ''}}
@@ -29,7 +30,7 @@ const PostForm = ({title, tags, img, textMarkdown, setTextMarkdown, submitHandle
                 return errors;
             }}
             onSubmit={ (values, { setSubmitting }) => {
-                const localValues:ICreatedPost = {imageUrl : previewImg, ...values, tags: values.tags.trim().split(' '), text : textMarkdown }
+                const localValues: ICreatedPost | any= {imageUrl : previewImg, ...values, tags: values.tags.trim().split(' '), text : textMarkdown }
                 submitHandle(localValues)
             }}
         >

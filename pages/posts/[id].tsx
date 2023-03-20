@@ -68,7 +68,7 @@ const Post = ({post, comments}:{post:IPost, comments: any}) => {
 
     const addCommentHandle = async ()=>{
         try{
-            const res = await createComment({text:newComment, id: post._id})
+            const res:any = await createComment({text:newComment, id: post._id})
             if(!!res.error){throw new Error(res.error.data.message)}
         }catch(error){
             alert(error)
