@@ -47,7 +47,8 @@ const Header = () => {
                        alt="Picture of the author"
                        width={50}
                        height={50}
-                       placeholder= "blurDataURL"
+                       placeholder= "blur"
+                       blurDataURL={'/ug_logo.svg'}
                    />
                </Link>
                 <ul className={styles.ul}>
