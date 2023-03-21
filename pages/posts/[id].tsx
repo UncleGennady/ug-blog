@@ -26,7 +26,7 @@ export const getStaticPaths : GetStaticPaths = async () => {
         })
     )
 
-    return {paths, fallback: false}
+    return {paths, fallback: 'blocking'}
 }
 export const getStaticProps : GetStaticProps = async (context) => {
     const {id}:any = context.params
@@ -38,7 +38,7 @@ export const getStaticProps : GetStaticProps = async (context) => {
 
     return {
         props: {post:doc, comments},
-        revalidate: 30,
+        revalidate: 10,
     }
 }
 
