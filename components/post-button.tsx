@@ -11,6 +11,7 @@ const PostButton = ({id}:{id:string}) => {
         if(window.confirm('Delete post ?')){
             // @ts-ignore
             deletePost(id)
+            router.push('/')
         }
     }
     return (
