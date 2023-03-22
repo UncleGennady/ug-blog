@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {GetStaticPaths, GetStaticProps} from "next";
 import {fetch} from "next/dist/compiled/@edge-runtime/primitives/fetch";
-import {IComment, IUpdatedPostResponse, IPost, IUpdatedPost, ICreatedPost} from "@/model";
+import {IUpdatedPostResponse, IPost, ICreatedPost} from "@/model";
 import {useRouter} from "next/router";
 import {useAppSelector} from "@/hook";
 import Head from "next/head";

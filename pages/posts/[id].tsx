@@ -80,7 +80,6 @@ const Post = ({post}:{post:IPost}) => {
         refetch()
     }
 
-    console.log(comments)
     // @ts-ignore
     return (
         <>
