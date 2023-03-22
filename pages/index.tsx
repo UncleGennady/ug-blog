@@ -2,7 +2,7 @@ import {useMemo, useState} from "react";
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '@/styles/Home.module.scss'
-import {GetStaticProps} from 'next'
+import {GetServerSideProps, GetStaticProps} from 'next'
 import {fetch} from "next/dist/compiled/@edge-runtime/primitives/fetch";
 import Aside from "@/components/aside";
 import {getDate, toggleForPostList} from "@/utils";
@@ -15,7 +15,21 @@ import PostButton from "@/components/post-button";
 import {useGetAuthMeQuery} from "@/store/authApi";
 
 
-export const getStaticProps : GetStaticProps = async () => {
+// export const getStaticProps : GetStaticProps = async () => {
+//     const res = await  fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts`)
+//     const {posts}:{posts:IPost[]} = await res.json()
+//     const postsReverse:IPost[] = posts.reverse()
+//
+//     const resLastComments = await  fetch(`${process.env.NEXT_PUBLIC_API_URL}/comments`)
+//
+//     const {comments}:{comments:IComment[]} = await resLastComments.json()
+//     // const comments:{success:boolean, comments:IComment[]} | {message:string} = await resLastComments.json()
+//     return {
+//         props: {posts:postsReverse, lastComments: comments},
+//         revalidate: 30,
+//     }
+// }
+export const getServerSideProps : GetServerSideProps = async () => {
     const res = await  fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts`)
     const {posts}:{posts:IPost[]} = await res.json()
     const postsReverse:IPost[] = posts.reverse()
@@ -26,7 +40,6 @@ export const getStaticProps : GetStaticProps = async () => {
     // const comments:{success:boolean, comments:IComment[]} | {message:string} = await resLastComments.json()
     return {
         props: {posts:postsReverse, lastComments: comments},
-        revalidate: 30,
     }
 }
 
