@@ -87,7 +87,7 @@ export default function Home({posts, lastComments}:{posts:IPost[], lastComments:
                     </div>}
                 <div className={styles.info}>
                     <div className={styles.privat_info}>
-                        <Avatar src={`${process.env.NEXT_PUBLIC_API_URL}${post.author.avatarUrl}`}/>
+                        { !!post.author.avatarUrl && <Avatar src={`${process.env.NEXT_PUBLIC_API_URL}${post.author.avatarUrl}`}/>}
                         <div>
                             <p>
                                 {post.author.fullName}

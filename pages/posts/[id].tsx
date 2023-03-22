@@ -127,7 +127,7 @@ const Post = ({post}:{post:IPost}) => {
                     <div className={styles.privat_info}>
                         <div className={styles.author}>
                             <h4>{post.author.fullName}</h4>
-                            <Avatar src={`${process.env.NEXT_PUBLIC_API_URL}${post.author.avatarUrl}`} />
+                            { !!post.author.avatarUrl &&  <Avatar src={`${process.env.NEXT_PUBLIC_API_URL}${post.author.avatarUrl}`} />}
                         </div>
                         <p>
                             {getDate(post.createdAt)}
