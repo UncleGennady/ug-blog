@@ -88,7 +88,7 @@ const PostForm = ({title, tags, img, textMarkdown, setTextMarkdown, submitHandle
 
                        {!!textMarkdown && textMarkdown.trim().length < 5 && <p>Invalid text</p>}
 
-                       <button className={styles.button} type="submit" disabled={isSubmitting}>
+                       <button className={styles.button} type="submit" disabled={!!errors.title || textMarkdown.trim().length < 5}>
                            Submit
                        </button>
                    </form>
