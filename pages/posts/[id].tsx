@@ -3,14 +3,14 @@ import Head from 'next/head'
 import {GetStaticPaths, GetStaticProps} from "next";
 import {fetch} from "next/dist/compiled/@edge-runtime/primitives/fetch";
 import ReactMarkdown from "react-markdown";
-import {IComment, IPost} from "@/model";
+import {IPost} from "@/model";
 import styles from "@/styles/Post.module.scss"
 import Image from "next/image";
 import {getDate} from "@/utils";
 import Comments from "@/components/comments";
 import Card from "@/components/card";
 import Avatar from "@/components/avatar";
-import {useCreateCommentMutation, useDeleteCommentMutation} from "@/store/commentApi";
+import {useCreateCommentMutation, useDeleteCommentMutation, useGetCommentsQuery} from "@/store/commentApi";
 import PostButton from "@/components/post-button";
 import {useGetAuthMeQuery} from "@/store/authApi";
 import {useRouter} from "next/router";
@@ -33,21 +33,16 @@ export const getStaticProps : GetStaticProps = async (context) => {
     const res = await  fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts/${id}`)
     const {doc} = await res.json()
 
-    const resComments = await  fetch(`${process.env.NEXT_PUBLIC_API_URL}/comments/${id}`)
-    const comments:{success:boolean, comments:IComment[]} | {message:string} = await resComments.json()
-
     return {
-        props: {post:doc, comments},
+        props: {post:doc},
         revalidate: 10,
     }
 }
-
-type TComments = {success: boolean, comments:IComment[]} | {message:string};
-
-const Post = ({post, comments}:{post:IPost, comments: any}) => {
+const Post = ({post}:{post:IPost}) => {
     const {data} = useGetAuthMeQuery()
     const [createComment] = useCreateCommentMutation()
     const [deleteComment] = useDeleteCommentMutation()
+    const {data:comments, isLoading, refetch} = useGetCommentsQuery(post._id)
     const [newComment, setNewComment] = useState('')
     const  router = useRouter()
 
@@ -70,6 +65,7 @@ const Post = ({post, comments}:{post:IPost, comments: any}) => {
         try{
             const res:any = await createComment({text:newComment, id: post._id})
             if(!!res.error){throw new Error(res.error.data.message)}
+            refetch()
         }catch(error){
             alert(error)
             if(window.confirm("Do you want sign in?")){
@@ -78,12 +74,14 @@ const Post = ({post, comments}:{post:IPost, comments: any}) => {
         }
     }
 
-    const deleteCommentHandle = (id:string)=> () =>{
+    const deleteCommentHandle = (id:string)=> async() =>{
         // @ts-ignore
-        deleteComment(id)
+        await deleteComment(id)
+        refetch()
     }
 
-
+    console.log(comments)
+    // @ts-ignore
     return (
         <>
             <Head>
@@ -115,7 +113,7 @@ const Post = ({post, comments}:{post:IPost, comments: any}) => {
                                     {post.viewsCount}
                                 </span>
                         </div>
-                        {!!comments.comments && <div className={styles.statistics_item}>
+                        {!isLoading && comments.success && <div className={styles.statistics_item}>
                             <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv" focusable="false"
                                  aria-hidden="true" viewBox="0 0 24 24" data-testid="ChatBubbleOutlineOutlinedIcon" width={18} height={18}>
                                 <path
@@ -137,7 +135,7 @@ const Post = ({post, comments}:{post:IPost, comments: any}) => {
                     </div>
                 </div>
             </Card>
-            <Comments comments={comments.comments} addCommentHandle={addCommentHandle} deleteHandle={deleteCommentHandle} newComment={newComment} setNewComment={setNewComment} />
+            {!isLoading && <Comments comments={comments.comments} addCommentHandle={addCommentHandle} deleteHandle={deleteCommentHandle} newComment={newComment} setNewComment={setNewComment} /> }
         </>
     );
 };

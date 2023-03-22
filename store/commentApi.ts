@@ -1,10 +1,13 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/dist/query/react";
 import {
+    IComment,
     ICreatedComment,
     ICreatedCommentResponse,
     IDeleteRequest,
     IDeleteResponse
 } from "@/model";
+
+type TComments = {success: boolean, comments:IComment[]} | {message:string};
 
 export const commentApi = createApi({
     reducerPath: 'commentApi',
@@ -18,6 +21,11 @@ export const commentApi = createApi({
         }
     }),
     endpoints: (build)=> ({
+        getComments: build.query<TComments | any, string>({
+            query:(postId) => ({
+                url:`/comments/${postId}`
+            })
+        }),
         createComment: build.mutation<ICreatedCommentResponse, ICreatedComment >({
             query:(params) => ({
                 url: `/comments`,
@@ -34,4 +42,4 @@ export const commentApi = createApi({
     })
 })
 
-export const {useCreateCommentMutation, useDeleteCommentMutation } = commentApi
+export const {useGetCommentsQuery, useCreateCommentMutation, useDeleteCommentMutation } = commentApi
