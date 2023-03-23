@@ -35,7 +35,7 @@ export const technologies = {
             {
                 id:'3',
                 name:"NEXT.js",
-                link: "https://redux-toolkit.js.org/",
+                link: "https://nextjs.org/",
             },
             {
                 id:'4',
