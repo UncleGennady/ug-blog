@@ -113,7 +113,7 @@ export default function Home({posts, lastComments}:{posts:IPost[], lastComments:
                         </h2>
                     </Link>
                     <h4 className={styles.tags_card}>
-                        {!!post.tags[0] && post.tags.map((tag:string,index:number)=><span key={index}>#{tag}</span>)}
+                        {!!post.tags[0] && post.tags.map((tag:string,index:number)=><button onClick={()=>setCurrentTag(tag)} key={index}>#{tag}</button>)}
                     </h4>
                 </div>
             </div>

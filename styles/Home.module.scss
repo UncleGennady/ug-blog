@@ -79,6 +79,12 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  a{
+    transition: .3s;
+    &:hover{
+      transform: scale(1.02, 1.1);
+    }
+  }
 }
 .privat_info{
   display: flex;
@@ -101,9 +107,22 @@
   padding: 0 10px 10px;
 }
 .tags_card{
-    span{
-      margin: 0 10px;
-    }
+  display: flex;
+  gap:10px;
+  button{
+    font-size: 18px;
+      padding: 5px 10px;
+      background: initial;
+      border: 0;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.5s;
+      &:hover{
+        transform: scale(1.1);
+        background: #495579;
+
+      }
+  }
 }
 .aside_wrapper{
   display: flex;
@@ -122,6 +141,15 @@
     width: 37%;
   }
 }
+
+@media(max-width: 700px) {
+  .tags_card{
+    button{
+      font-size: 16px;
+    }
+  }
+}
+
 @media(max-width:520px) {
   .wrapper_cards{
     width: 100%;
