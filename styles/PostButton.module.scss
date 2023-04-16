@@ -10,6 +10,9 @@
   padding: 10px;
   position: absolute;
   border-radius: 10px;
+  &_dark{
+    background: aqua;
+  }
 }
 .delete{
   cursor: pointer;

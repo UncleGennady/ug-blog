@@ -10,6 +10,9 @@
   gap: 10px;
   line-height: 25px;
   font-size: 20px;
+  &_dark{
+    color:aqua;
+  }
   div {
     padding: 20px;
   }
@@ -19,6 +22,9 @@
 }
 .toggle_active{
   border-bottom: 2px solid #263159 ;
+  &_dark{
+    border-color:aqua;
+  }
 }
 .tag{
     display: flex;
@@ -62,6 +68,11 @@
   transition: .3s;
   &:hover{
     transform: scale(1.01);
+  }
+  &_dark{
+    background: #202124;
+    color: #FFFBEB;
+    box-shadow: 0 0 15px 0 aqua;
   }
 
 }
@@ -120,8 +131,17 @@
       &:hover{
         transform: scale(1.1);
         background: #495579;
-
+        color: #FFFBEB;
       }
+  }
+  &_dark{
+    button{
+      color:#FFFBEB;
+        &:hover{
+          background: aqua;
+          color:black
+        }
+    }
   }
 }
 .aside_wrapper{

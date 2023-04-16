@@ -2,6 +2,11 @@
   h2{
     text-align: center;
   }
+  &_dark{
+    h2{
+      color: aqua;
+    }
+  }
 }
 .wrapper{
   padding: 20px;
@@ -23,6 +28,11 @@
   &:focus{
     transform: scale(1.1);
   }
+  &_dark{
+    color: #FFFBEB;
+    background: #494949;
+    box-shadow: 0 0 15px 0 aqua;
+  }
 }
 .input_error{
   color: #ff6a6a;
@@ -36,6 +46,15 @@
   color: #FFFBEB;
   background: #251749;
   font-size: 18px;
+  transition: .3s;
+  &:hover{
+    transform: scale(1.1);
+  }
+  &_dark{
+    background: aqua;
+    color: black;
+  }
+
 }
 .button_delete{
   cursor: pointer;

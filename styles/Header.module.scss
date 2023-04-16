@@ -2,8 +2,11 @@
   background: #263159;
   box-shadow: 0 0 16px 4px #495579;
   margin-bottom: 20px;
+  &_dark{
+    background: black;
+    box-shadow: 0 0 16px 4px aqua;
+  }
 }
-
 .nav{
   padding: 20px 50px 20px 30px;
   color: #F3EFE0;
@@ -36,6 +39,23 @@
   height: 70px;
   position: relative;
 }
+.theme{
+  padding: 0 10px 0 0;
+  button{
+    cursor: pointer;
+    width: 42px;
+    height: 42px;
+    padding: 5px;
+    border-radius: 50%;
+    border: 0;
+    outline: none;
+    transition: .5s;
+    &:hover{
+      box-shadow: 0 0 14px 1px #FFFBEB;
+      transform: scale(1.3);
+    }
+  }
+}
 .button{
   font-size: inherit;
   font-weight: inherit;
@@ -51,6 +71,14 @@
     background: #251749;
 
   }
+  &_dark{
+    background: aqua;
+    box-shadow: 0 0 5px 1px aqua;
+    &:hover{
+      color: #FFFBEB;
+      background: black;
+    }
+  }
 }
 .link{
   color:#FFFBEB;
@@ -60,7 +88,7 @@
 }
 
 
-@media(max-width:640px) {
+@media(max-width:694px) {
 
   .nav{
     padding: 5px 20px;
@@ -90,7 +118,7 @@
   }
 }
 
-@media(max-width:420px){
+@media(max-width:490px){
   .logo_wrapper{
     padding: 10px;
 
@@ -103,6 +131,18 @@
     .ul{
       font-size: 16px;
       gap: 8px;
+    }
+  }
+}
+
+@media(max-width:425px){
+  .theme{
+    padding: 0 2px ;
+  }
+  .nav{
+    .ul{
+      font-size: 14px;
+      gap: 5px;
     }
   }
 }

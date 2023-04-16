@@ -12,6 +12,8 @@ export type toogleForPostList = {
     popular: string,
 }
 
+export type theme = 'light' | 'dark';
+
 export interface  IAuthMeResponse {
     success: boolean,
     _id: string,

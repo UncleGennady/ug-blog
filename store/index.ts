@@ -3,11 +3,13 @@ import {authApi} from "@/store/authApi";
 import {postApi} from "@/store/postApi";
 import {commentApi} from "@/store/commentApi";
 import authReducer from "@/store/slice/authSlice";
+import themeReducer from "@/store/slice/themeSlice";
 
 
 export const store = configureStore({
     reducer: {
         auth: authReducer,
+        theme:themeReducer,
         [authApi.reducerPath]: authApi.reducer,
         [postApi.reducerPath]: postApi.reducer,
         [commentApi.reducerPath]: commentApi.reducer,

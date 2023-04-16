@@ -29,7 +29,6 @@
         transform: scale(1.04);
       }
     }
-
     button{
       font-size: 18px;
       padding: 10px;
@@ -45,7 +44,24 @@
 
       }
     }
+    &_dark{
+      textarea{
+        color:#FFFBEB;
+        background: #494949;
+        box-shadow: 0 0 3px 1px aqua;
+      }
+      button {
+        color: black;
+        background: aqua;
+        box-shadow: 0 0 5px 1px aqua;
+        &:hover{
+          color: #FFFBEB;
+          background: black;
+        }
+      }
+    }
   }
+
 }
 .comment_info{
   display: flex;
@@ -71,6 +87,11 @@
   }
   &_date{
     font-size: 14px;
+  }
+
+  &_dark{
+    background: #494949;
+    box-shadow: 0 0 3px 1px aqua;
   }
 }
 .delete{

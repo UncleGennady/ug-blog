@@ -16,7 +16,16 @@
   transition: .5s;
   &:hover{
     background: #495579;
+    color: #FFFBEB;
   }
+  &_dark{
+    color: #FFFBEB;
+    &:hover{
+      background: aqua;
+      color:black
+    }
+  }
+
 
 }
 .icon{

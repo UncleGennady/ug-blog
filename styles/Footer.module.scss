@@ -6,6 +6,10 @@
   padding: 30px 50px;
   border-top: 2px solid #263159;
   font-family: '__Raleway_d1723a', '__Raleway_Fallback_d1723a';
+  &_dark{
+    border-color: aqua;
+    color: #FFFBEB;
+  }
 }
 .link_list{
   display: flex;

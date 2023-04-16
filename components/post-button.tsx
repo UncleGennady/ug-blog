@@ -3,8 +3,10 @@ import Link from "next/link";
 import styles from '@/styles/PostButton.module.scss'
 import {useDeletePostMutation} from "@/store/postApi";
 import {useRouter} from "next/router";
+import {useAppSelector} from "@/hook";
 
 const PostButton = ({id}:{id:string}) => {
+    const theme = useAppSelector(state => state.theme.value)
     const [deletePost] = useDeletePostMutation()
     const  router = useRouter()
     const deleteHandle = () => {
@@ -15,7 +17,7 @@ const PostButton = ({id}:{id:string}) => {
         }
     }
     return (
-        <div className={styles.post_button}>
+        <div className={`${styles.post_button} ${theme === 'dark' ? styles.post_button_dark : ''}`}>
             <Link className={styles.edit} href={`/edit-post/${id}`}>
                 <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv" focusable="false"
                      aria-hidden="true" viewBox="0 0 24 24" data-testid="EditIcon">

@@ -4,8 +4,10 @@ import styles from "@/styles/Layout.module.scss"
 import {raleway} from "@/pages/_app";
 import {JSXElement} from "@/model";
 import Footer from "@/components/footer";
+import {useAppSelector} from "@/hook";
 
 const Layout = ({children}:{children:JSXElement | JSXElement[]}) => {
+    const theme = useAppSelector(state => state.theme.value)
     return (
         <>
             <Header />
@@ -15,6 +17,12 @@ const Layout = ({children}:{children:JSXElement | JSXElement[]}) => {
                 </div>
             </main>
             <Footer/>
+            {theme === 'dark' && <style jsx global>{`
+                    body {
+                      background: #202124;
+                    }
+              `}
+            </style>}
         </>
 
     );

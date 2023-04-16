@@ -14,6 +14,7 @@ import {useCreateCommentMutation, useDeleteCommentMutation, useGetCommentsQuery}
 import PostButton from "@/components/post-button";
 import {useGetAuthMeQuery} from "@/store/authApi";
 import {useRouter} from "next/router";
+import {useAppSelector} from "@/hook";
 
 export const getStaticPaths : GetStaticPaths = async () => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts`)
@@ -39,6 +40,7 @@ export const getStaticProps : GetStaticProps = async (context) => {
     }
 }
 const Post = ({post}:{post:IPost}) => {
+    const theme = useAppSelector(state => state.theme.value)
     const {data} = useGetAuthMeQuery()
     const [createComment] = useCreateCommentMutation()
     const [deleteComment] = useDeleteCommentMutation()
@@ -104,7 +106,7 @@ const Post = ({post}:{post:IPost}) => {
                     <div className={styles.statistics}>
                         <div className={styles.statistics_item}>
                             <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv" focusable="false"
-                                 aria-hidden="true" viewBox="0 0 24 24" data-testid="RemoveRedEyeOutlinedIcon" width={18} height={18}>
+                                 aria-hidden="true" viewBox="0 0 24 24" data-testid="RemoveRedEyeOutlinedIcon" fill={ theme === 'dark' ? '#FFFBEB' : 'black'} width={18} height={18}>
                                 <path
                                     d="M12 6.5c3.79 0 7.17 2.13 8.82 5.5-1.65 3.37-5.02 5.5-8.82 5.5S4.83 15.37 3.18 12C4.83 8.63 8.21 6.5 12 6.5m0-2C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 5c1.38 0 2.5 1.12 2.5 2.5s-1.12 2.5-2.5 2.5-2.5-1.12-2.5-2.5 1.12-2.5 2.5-2.5m0-2c-2.48 0-4.5 2.02-4.5 4.5s2.02 4.5 4.5 4.5 4.5-2.02 4.5-4.5-2.02-4.5-4.5-4.5z"></path>
                             </svg>
@@ -114,7 +116,7 @@ const Post = ({post}:{post:IPost}) => {
                         </div>
                         {!isLoading && comments.success && <div className={styles.statistics_item}>
                             <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv" focusable="false"
-                                 aria-hidden="true" viewBox="0 0 24 24" data-testid="ChatBubbleOutlineOutlinedIcon" width={18} height={18}>
+                                 aria-hidden="true" viewBox="0 0 24 24" data-testid="ChatBubbleOutlineOutlinedIcon" fill={ theme === 'dark' ? '#FFFBEB' : 'black'} width={18} height={18}>
                                 <path
                                     d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"></path>
                             </svg>
