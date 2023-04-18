@@ -28,6 +28,7 @@ const Header = () => {
     const {data} = useGetAuthMeQuery()
     const auth = useAppSelector((state) => state.auth.value)
     const theme = useAppSelector((state) => state.theme.value)
+    const [isClicked, setIsClicked] = useState(false)
     const dispatch = useAppDispatch()
     useEffect(() => {
          if(!!data) dispatch(setAuthState(true))
@@ -50,6 +51,9 @@ const Header = () => {
     const changeTheme = (theme: theme)=> () => {
         window.localStorage.setItem('theme', theme)
         dispatch(setThemeState(theme))
+    }
+    const updateBurgerMenu = () => {
+        setIsClicked(!isClicked)
     }
 
     return (
@@ -124,9 +128,14 @@ const Header = () => {
                             </>
                     }
                 </ul>
-                <Burger>
+                <Burger isClicked={isClicked} updateMenu={updateBurgerMenu}>
                     {theme==="light" && <li className={styles.theme}>
-                        <button onClick={changeTheme('dark')}>
+                        <button
+                            onClick={()=>{
+                                changeTheme('dark')()
+                                updateBurgerMenu()
+                            }
+                        }>
                             <svg width="32" height="32" version="1.0" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                                 <g transform="translate(0 512) scale(.1 -.1)">
                                     <path d="m2105 4954c-419-57-770-228-1085-530-191-184-332-379-455-629-116-235-186-470-227-760-19-138-16-524 5-665 71-457 233-842 495-1175 71-90 267-286 357-357 340-268 742-434 1210-500 118-16 512-16 635 1 159 21 328 60 470 107 156 52 395 166 525 251 265 174 507 420 665 678 154 250 253 568 254 817 1 92-2 110-20 134-38 52-71 69-132 69-51 0-66-5-145-53-178-109-404-198-617-244-141-30-475-33-615-5-681 135-1206 661-1331 1332-29 152-26 472 5 615 45 213 134 439 243 617 48 79 53 94 53 145 0 61-17 94-69 132-22 17-44 21-109 22-45 1-95 0-112-2zm-184-416c-73-162-140-412-162-608-14-128-7-423 14-535 81-433 281-807 586-1098 291-277 629-448 1036-524 112-21 407-28 535-14 196 23 449 90 607 161l63 29-6-27c-30-125-141-351-242-492-87-123-261-298-389-393-465-344-1084-473-1691-351-574 114-1056 454-1347 948-276 470-357 1090-214 1646 136 529 491 981 947 1209 84 42 258 110 284 111 4 0-6-28-21-62z"/>
@@ -135,7 +144,11 @@ const Header = () => {
                         </button>
                     </li>}
                     {theme==="dark" && <li className={styles.theme}>
-                        <button onClick={changeTheme('light')}>
+                        <button onClick={()=>{
+                            changeTheme('light')()
+                            updateBurgerMenu()
+                        }
+                        }>
                             <svg width="32" height="32" version="1.0" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                                 <g transform="translate(0 512) scale(.1 -.1)">
                                     <path d="m2486 5105c-50-18-102-68-121-120-13-34-15-85-13-311 3-266 3-271 27-305 39-58 97-92 162-97 73-5 115 9 163 56 64 62 66 71 66 364 0 296-4 314-73 375-58 51-135 65-211 38z"/>
@@ -153,7 +166,7 @@ const Header = () => {
                     </li>}
                     {navigationPage.map(page=>(
                             <li key={page.id}>
-                                    <Link href={page.path} className={`${pathname === page.path ? styles["link-active"] : ''}`}>
+                                    <Link href={page.path} onClick={updateBurgerMenu} className={`${pathname === page.path ? styles["link-active"] : ''}`}>
                                     {page.title}
                                 </Link>
                             </li>
@@ -161,7 +174,7 @@ const Header = () => {
                     )}
                     {!auth && navigationRegister.map(page=>(
                             <li key={page.id}>
-                                <Link href={page.path} className={`${pathname === page.path ? styles["link-active"] : ''}`}>
+                                <Link href={page.path} onClick={updateBurgerMenu} className={`${pathname === page.path ? styles["link-active"] : ''}`}>
                                     {page.title}
                                 </Link>
                             </li>
@@ -170,12 +183,18 @@ const Header = () => {
                     {auth &&
                     <>
                         <li>
-                            <Link href={'/add-post'} className={`${styles.burger_button} ${theme==='dark' ? styles.burger_button_dark : ''}`}>
+                            <Link href={'/add-post'} onClick={updateBurgerMenu} className={`${styles.burger_button} ${theme==='dark' ? styles.burger_button_dark : ''}`}>
                                 Add post
                             </Link>
                         </li>
                         <li>
-                            <button className={`${styles.burger_button} ${theme==='dark' ? styles.burger_button_dark : ''}`} onClick={onClickLogout}>
+                            <button className={`${styles.burger_button} ${theme==='dark' ? styles.burger_button_dark : ''}`}
+                                    onClick={()=>{
+                                        onClickLogout()
+                                        updateBurgerMenu()
+                                        }
+                                    }
+                            >
                                 Log out
                             </button>
                         </li>

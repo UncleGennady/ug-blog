@@ -1,15 +1,11 @@
-import React, {useState} from "react";
+import React from "react";
 import styles from "@/styles/Burger.module.scss"
 import {useAppSelector} from "@/hook";
 import {JSXElement} from "@/model";
 
 
-const Burger = ({children}:{children:JSXElement | JSXElement[] | any}) => {
+const Burger = ({children, isClicked, updateMenu}:{children:JSXElement | JSXElement[] | any, isClicked: boolean, updateMenu: ()=>void}) => {
     const theme = useAppSelector((state) => state.theme.value)
-    const [isClicked, setIsClicked] = useState(false)
-    const updateMenu = () => {
-       setIsClicked(!isClicked)
-    }
 
     return(
             <>
