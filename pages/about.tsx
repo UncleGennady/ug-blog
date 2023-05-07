@@ -53,8 +53,8 @@ const About = ({technologies}:{technologies:ITechnologies}) => {
             </Head>
             <div className={`${styles.wrapper} ${theme === 'dark' ? styles.wrapper_dark : ''}`}>
                 <article className={styles.article}>
-                    Hello everyone. This is one of my pet projects blog site where you can leave your posts and comments on them .
-                    Below is a list of technologies used to create the site.
+                    Hello everyone. This is one of my pet projects blog site where you can leave your posts and comments on them.
+                    I used a variety of technologies and tools to create the functionality and design of the site. For deployment and hosting, I used Vercel, a platform for developing and deploying web applications. I also used the following technologies:
                 </article>
                 <div className={styles.technologies_wrapper}>
                     <div className={styles.technologies}>
@@ -72,6 +72,15 @@ const About = ({technologies}:{technologies:ITechnologies}) => {
                         {renderGitHubLink(technologies.frontend.gitHubLink)}
                     </div>
                 </div>
+                <article className={styles.article}>
+                    Thank you for your interest in my blog, and I hope you find something interesting for yourself here!If you have any questions or suggestions for improving the blog, please don't hesitate to contact me. I always appreciate feedback from my readers and strive to make my blog as convenient and interesting as possible for everyone.
+
+                    In the blog, you'll find articles on various topics, including technology, science, art, personal growth, and more. I try to share my knowledge and experience, as well as inspire my readers with new ideas and achievements.
+
+                    If you'd like to leave a comment on my article or write your own, please use the comments form on the site. I'll definitely read your message and respond to it if necessary.
+
+                    Once again, thank you for your interest in my blog, and I hope you find something useful and interesting for yourself here.
+                </article>
             </div>
 
         </>

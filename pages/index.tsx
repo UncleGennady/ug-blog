@@ -87,7 +87,7 @@ export default function Home({posts, lastComments}:{posts:IPost[], lastComments:
                     fill
                     />
                     </div>}
-                <div className={styles.info}>
+                <div className={`${styles.info} ${theme === 'dark' ? styles.info_dark : ''}`}>
                     <div className={styles.privat_info}>
                         { !!post.author.avatarUrl && <Avatar src={`${process.env.NEXT_PUBLIC_API_URL}${post.author.avatarUrl}`}/>}
                         <div>
