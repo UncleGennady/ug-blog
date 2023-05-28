@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Head from 'next/head'
-import {GetStaticPaths, GetStaticProps} from "next";
+import {GetStaticPaths, GetStaticProps, GetStaticPropsContext, GetStaticPropsResult} from "next";
 import {fetch} from "next/dist/compiled/@edge-runtime/primitives/fetch";
 import ReactMarkdown from "react-markdown";
 import {IPost} from "@/model";
@@ -29,16 +29,26 @@ export const getStaticPaths : GetStaticPaths = async () => {
 
     return {paths, fallback: 'blocking'}
 }
-export const getStaticProps : GetStaticProps = async (context) => {
-    const {id}:any = context.params
-    const res = await  fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts/${id}`)
-    const {doc} = await res.json()
+export const getStaticProps: GetStaticProps<any> = async (context: GetStaticPropsContext): Promise<GetStaticPropsResult<any>> => {
+    const { id }:any = context.params;
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts/${id}`);
+    const { doc } = await res.json();
+
+    if (!doc) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false,
+            },
+        };
+    }
 
     return {
-        props: {post:doc},
+        props: { post: doc },
         revalidate: 10,
-    }
-}
+    };
+};
+
 const Post = ({post}:{post:IPost}) => {
     const theme = useAppSelector(state => state.theme.value)
     const {data} = useGetAuthMeQuery()

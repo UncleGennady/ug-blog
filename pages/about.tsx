@@ -4,6 +4,7 @@ import styles from "@/styles/About.module.scss";
 import {ITechnologies, ITechnology} from "@/model";
 import {GetServerSideProps} from "next";
 import {useAppSelector} from "@/hook";
+import {motion} from "framer-motion";
 
 export const getServerSideProps:GetServerSideProps = async () => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/technologies`)
@@ -17,6 +18,17 @@ export const getServerSideProps:GetServerSideProps = async () => {
 const About = ({technologies}:{technologies:ITechnologies}) => {
 
     const theme = useAppSelector(state => state.theme.value)
+
+    const linkBlockVariants= {
+        visible:{opacity: 1,x:0, transition:{duration: 0.4}},
+        hidden: {opacity: 0,x:-500},
+    };
+    const textBlockVariants= {
+        visible:{opacity: 1,x:0, transition:{duration: 0.4}},
+        hidden: {opacity: 0,x:500},
+    };
+
+
 
     const renderTechnologies  = (technologies: ITechnology[]) => {
         return(
@@ -52,29 +64,29 @@ const About = ({technologies}:{technologies:ITechnologies}) => {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
             <div className={`${styles.wrapper} ${theme === 'dark' ? styles.wrapper_dark : ''}`}>
-                <article className={styles.article}>
+                <motion.article variants={textBlockVariants} initial='hidden' animate='visible' className={styles.article}>
                     Hello everyone. This is one of my pet projects blog site where you can leave your posts and comments on them.
                     I used a variety of technologies and tools to create the functionality and design of the site. For deployment and hosting, I used Vercel, a platform for developing and deploying web applications. I also used the following technologies:
-                </article>
+                </motion.article>
                 <div className={styles.technologies_wrapper}>
-                    <div className={styles.technologies}>
+                    <motion.div variants={linkBlockVariants} initial='hidden' animate='visible' className={styles.technologies}>
                         <h3>
                             Backend:
                         </h3>
                         {renderTechnologies(technologies.backend.technologies)}
                         {renderGitHubLink(technologies.backend.gitHubLink)}
-                    </div>
-                    <div className={styles.technologies} >
+                    </motion.div>
+                    <motion.div variants={linkBlockVariants} initial='hidden' animate='visible'  className={styles.technologies} >
                         <h3>
                             Frontend:
                         </h3>
                         {renderTechnologies(technologies.frontend.technologies)}
                         {renderGitHubLink(technologies.frontend.gitHubLink)}
-                    </div>
+                    </motion.div>
                 </div>
-                <article className={styles.article}>
+                <motion.article variants={textBlockVariants} initial='hidden' animate='visible' className={styles.article}>
                     {`Thank you for your interest in my blog, and I hope you find something interesting for yourself here! If you have any questions or suggestions for improving the blog, please don't hesitate to contact me. I always appreciate feedback from my readers and strive to make my blog as convenient and interesting as possible for everyone. In the blog, you'll find articles on various topics, including technology, science, art, personal growth, and more. I try to share my knowledge and experience, as well as inspire my readers with new ideas and achievements. If you'd like to leave a comment on my article or write your own, please use the comments form on the site. I'll definitely read your message and respond to it if necessary. Once again, thank you for your interest in my blog, and I hope you find something useful and interesting for yourself here.`}
-                </article>
+                </motion.article>
             </div>
 
         </>

@@ -14,6 +14,7 @@ import CommentsList from "@/components/comments-list";
 import PostButton from "@/components/post-button";
 import {useGetAuthMeQuery} from "@/store/authApi";
 import {useAppSelector} from "@/hook";
+import {motion} from "framer-motion";
 
 
 // export const getStaticProps : GetStaticProps = async () => {
@@ -71,11 +72,29 @@ export default function Home({posts, lastComments}:{posts:IPost[], lastComments:
         if(!currentTag) return posts
         return posts.slice().filter(({tags})=>tags.includes(currentTag))
     }
+
+    const cardVariants= {
+        visible:(index:number) => ({
+            opacity:1,
+            x:0,
+            transition:{
+                delay: index * 0.2,
+                duration: 0.4
+            }
+        }),
+        hidden: {opacity: 0,x:-2000}
+    };
+
     const renderPosts = (posts:IPost[]) =>{
-        return (posts.map((post:IPost)=>(
-            <div
+        return (posts.map((post:IPost, index:number)=>(
+            <motion.div
                 key={post._id}
                 className={`${styles.card} ${theme === 'dark' ? styles.card_dark : ''}`}
+                variants={cardVariants}
+                initial='hidden'
+                animate='visible'
+                custom={index}
+                whileHover={{ scale: 1.01 }}
             >
                 {!!data && data._id === post.author._id && <PostButton id={post._id}/>}
                 {!!post.imageUrl && <div className={styles.wrapper_image}>
@@ -118,7 +137,7 @@ export default function Home({posts, lastComments}:{posts:IPost[], lastComments:
                         {!!post.tags[0] && post.tags.map((tag:string,index:number)=><button onClick={()=>setCurrentTag(tag)} key={index}>#{tag}</button>)}
                     </h4>
                 </div>
-            </div>
+            </motion.div>
         )))
     }
     return (
