@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from "@/components/header";
-import styles from "@/styles/Layout.module.scss"
+import containerStyles from "@/styles/Container.module.scss"
 import {raleway} from "@/pages/_app";
 import {JSXElement} from "@/model";
 import Footer from "@/components/footer";
@@ -12,7 +12,7 @@ const Layout = ({children}:{children:JSXElement | JSXElement[]}) => {
         <>
             <Header />
             <main className={raleway.className} >
-                <div className={styles.container}>
+                <div className={containerStyles.container}>
                     {children}
                 </div>
             </main>
